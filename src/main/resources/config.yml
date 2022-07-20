@@ -1,0 +1,15 @@
+Language: zh-CN
+
+Game:
+  FoodPercentage: 0.05
+
+Sound:
+  PlayEatSound: true
+  PlayLossSound: true
+  PlayCountDownSound: true
+
+Command:
+  #  WinCommand: give [player] diamond 1
+  WinCommand: [null]
+  #  LossCommand: kill [player]
+  LossCommand: [null]

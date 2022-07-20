@@ -1,0 +1,10 @@
+name: Snake
+version: '${project.version}'
+main: cn.goldenpotato.snake.Snake
+api-version: 1.14
+commands:
+  snake:
+    aliases:
+      - "sn"
+    description: "Commands of Snake"
+    usage: "/snake"
