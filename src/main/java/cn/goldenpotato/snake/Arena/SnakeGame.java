@@ -104,7 +104,7 @@ public class SnakeGame
         for(Snake snake : snakes)
             if(snake.players.size()!=playerPerSnake)
             {
-                lastSnake = snakes.get(snakes.size() - 1);
+                lastSnake = snake;
                 break;
             }
         if(lastSnake==null)
@@ -165,10 +165,11 @@ public class SnakeGame
         Collections.shuffle(beginPos);
         cntAliveSnake=0;
         for(int i=0;i<snakes.size();i++)
-        {
-            cntAliveSnake++;
-            snakes.get(i).StartGame(beginPos.get(i%beginPos.size()));
-        }
+            if(snakes.get(i).players.size()==playerPerSnake)
+            {
+                cntAliveSnake++;
+                snakes.get(i).StartGame(beginPos.get(i%beginPos.size()));
+            }
         gameStatus = GameStatus.IN_GAME;
     }
 
