@@ -1,12 +1,14 @@
 package cn.goldenpotato.snake.Arena;
 
 import cn.goldenpotato.snake.Config.ArenaManager;
+import cn.goldenpotato.snake.Config.MessageManager;
 import cn.goldenpotato.snake.Util.Coordinate;
 import cn.goldenpotato.snake.Util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import java.util.*;
@@ -180,5 +182,25 @@ public class SnakeGame
                 return snake;
         }
         return null;
+    }
+
+    /**
+     * 输出游戏信息
+     */
+    public void PrintStatus(Player player)
+    {
+        Util.Message(player,"§a=========================");
+        Util.Message(player, MessageManager.msg.SnakeGame_ArenaName + name);
+        Util.Message(player,MessageManager.msg.SnakeGame_SnakeNum + maxSnake);
+        Util.Message(player,MessageManager.msg.SnakeGame_PlayerPerSnake + playerPerSnake);
+        Util.Message(player,MessageManager.msg.SnakeGame_FoodNum + foods.size());
+        Util.Message(player,MessageManager.msg.SnakeGame_SpawnNum + beginPos.size());
+        if(gameStatus == GameStatus.IN_GAME)
+            Util.Message(player,MessageManager.msg.SnakeGame_GameStatus + MessageManager.msg.SnakeGame_InGame + " ("+cntAliveSnake+")");
+        else
+            Util.Message(player,MessageManager.msg.SnakeGame_GameStatus + MessageManager.msg.SnakeGame_Waiting);
+        for(Snake snake : snakes)
+            snake.PrintStatus(player);
+        Util.Message(player,"§a=========================");
     }
 }

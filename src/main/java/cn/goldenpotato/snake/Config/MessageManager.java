@@ -19,6 +19,7 @@ public class MessageManager
         msg.Util_WrongNum = messageReader.getString("Util_WrongNum");
         msg.Util_WrongCommand = messageReader.getString("Util_WrongCommand");
         msg.Util_NoPermission = messageReader.getString("Util_NoPermission");
+        msg.Util_ArenaNotFound = messageReader.getString("Util_ArenaNotFound");
 
         msg.Item_ChangeHeading_Up = messageReader.getString("Item_ChangeHeading_Up");
         msg.Item_ChangeHeading_Down = messageReader.getString("Item_ChangeHeading_Down");
@@ -54,8 +55,23 @@ public class MessageManager
         msg.SubCommand_Start_Usage = messageReader.getString("SubCommand_Start_Usage");
         msg.SubCommand_Start_ArenaNotExist = messageReader.getString("SubCommand_Start_ArenaNotExist");
         msg.SubCommand_Start_AlreadyStart = messageReader.getString("SubCommand_Start_AlreadyStart");
+        msg.SubCommand_Status_Usage = messageReader.getString("SubCommand_Status_Usage");
         msg.SubCommand_Stop_Usage = messageReader.getString("SubCommand_Stop_Usage");
         msg.SubCommand_Stop_ArenaNotExist = messageReader.getString("SubCommand_Stop_ArenaNotExist");
         msg.SubCommand_Stop_NotInGame = messageReader.getString("SubCommand_Stop_NotInGame");
+
+        msg.SnakeGame_ArenaName = messageReader.getString("SnakeGame_ArenaName");
+        msg.SnakeGame_SnakeNum = messageReader.getString("SnakeGame_SnakeNum");
+        msg.SnakeGame_PlayerPerSnake = messageReader.getString("SnakeGame_PlayerPerSnake");
+        msg.SnakeGame_FoodNum = messageReader.getString("SnakeGame_FoodNum");
+        msg.SnakeGame_SpawnNum = messageReader.getString("SnakeGame_SpawnNum");
+        msg.SnakeGame_GameStatus = messageReader.getString("SnakeGame_GameStatus");
+        msg.SnakeGame_InGame = messageReader.getString("SnakeGame_InGame");
+        msg.SnakeGame_Waiting = messageReader.getString("SnakeGame_Waiting");
+        msg.SnakeGame_PlayerNum = messageReader.getString("SnakeGame_PlayerNum");
+        msg.Snake_Status = messageReader.getString("Snake_Status");
+        msg.Snake_Status_Dead = messageReader.getString("Snake_Status_Dead");
+        msg.Snake_Status_Alive = messageReader.getString("Snake_Status_Alive");
+        msg.Snake_Player = messageReader.getString("Snake_Player");
     }
 }

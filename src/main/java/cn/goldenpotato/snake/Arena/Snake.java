@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -358,5 +359,22 @@ public class Snake
         ticks++;
         if (ticks % coolDownTick == 0)
             Move();
+    }
+
+    /**
+     * 输出蛇的信息
+     */
+    public void PrintStatus(Player player)
+    {
+        Util.Message(player,"§a-----");
+        if(snakeStatus == SnakeStatus.ALIVE || snakeStatus == SnakeStatus.STOP)
+            Util.Message(player,MessageManager.msg.Snake_Status + MessageManager.msg.Snake_Status_Alive);
+        else
+            Util.Message(player,MessageManager.msg.Snake_Status + MessageManager.msg.Snake_Status_Dead);
+        StringBuilder temp = new StringBuilder(MessageManager.msg.Snake_Player + "[");
+        for(UUID uuid : players)
+            temp.append(Objects.requireNonNull(Bukkit.getPlayer(uuid)).getName()).append(",");
+        temp.append("]");
+        Util.Message(player, temp.toString());
     }
 }

@@ -5,6 +5,7 @@ public class Message
     public String Util_WrongNum;
     public String Util_WrongCommand;
     public String Util_NoPermission;
+    public String Util_ArenaNotFound;
     public String Item_ChangeHeading_Up;
     public String Item_ChangeHeading_Down;
     public String Item_ChangeHeading_Left;
@@ -37,7 +38,21 @@ public class Message
     public String SubCommand_Start_Usage;
     public String SubCommand_Start_ArenaNotExist;
     public String SubCommand_Start_AlreadyStart;
+    public String SubCommand_Status_Usage;
     public String SubCommand_Stop_Usage;
     public String SubCommand_Stop_ArenaNotExist;
     public String SubCommand_Stop_NotInGame;
+    public String SnakeGame_ArenaName;
+    public String SnakeGame_SnakeNum;
+    public String SnakeGame_PlayerPerSnake;
+    public String SnakeGame_FoodNum;
+    public String SnakeGame_SpawnNum;
+    public String SnakeGame_GameStatus;
+    public String SnakeGame_InGame;
+    public String SnakeGame_Waiting;
+    public String SnakeGame_PlayerNum;
+    public String Snake_Status;
+    public String Snake_Status_Dead;
+    public String Snake_Status_Alive;
+    public String Snake_Player;
 }
