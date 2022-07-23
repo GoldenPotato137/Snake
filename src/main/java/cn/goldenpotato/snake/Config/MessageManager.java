@@ -62,6 +62,7 @@ public class MessageManager
 
         msg.SnakeGame_ArenaName = messageReader.getString("SnakeGame_ArenaName");
         msg.SnakeGame_SnakeNum = messageReader.getString("SnakeGame_SnakeNum");
+        msg.SnakeGame_MinSnakeNum = messageReader.getString("SnakeGame_MinSnakeNum");
         msg.SnakeGame_PlayerPerSnake = messageReader.getString("SnakeGame_PlayerPerSnake");
         msg.SnakeGame_FoodNum = messageReader.getString("SnakeGame_FoodNum");
         msg.SnakeGame_SpawnNum = messageReader.getString("SnakeGame_SpawnNum");
@@ -71,6 +72,7 @@ public class MessageManager
         msg.SnakeGame_PlayerNum = messageReader.getString("SnakeGame_PlayerNum");
         msg.SnakeGame_InitialSpeed = messageReader.getString("SnakeGame_InitialSpeed");
         msg.SnakeGame_CountDown = messageReader.getString("SnakeGame_CountDown");
+        msg.SnakeGame_WaitingTitle = messageReader.getString("SnakeGame_WaitingTitle");
         msg.Snake_Status = messageReader.getString("Snake_Status");
         msg.Snake_Status_Dead = messageReader.getString("Snake_Status_Dead");
         msg.Snake_Status_Alive = messageReader.getString("Snake_Status_Alive");

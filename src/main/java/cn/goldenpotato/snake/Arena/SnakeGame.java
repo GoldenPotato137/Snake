@@ -8,6 +8,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -42,6 +45,7 @@ public class SnakeGame
     public List<UUID> players = new ArrayList<>();
     public int y;
     public GameStatus gameStatus = GameStatus.WAITING;
+    private BossBar bossBar;
 
     void Init()
     {
@@ -54,6 +58,7 @@ public class SnakeGame
                 CheckStart();
             }
         }.runTaskTimer(cn.goldenpotato.snake.Snake.instance,0,60);
+        bossBar = Bukkit.createBossBar("", BarColor.RED, BarStyle.SOLID);
     }
 
     /**
@@ -116,6 +121,7 @@ public class SnakeGame
     public List<Heading> Join(UUID player, Inventory inventory)
     {
         cn.goldenpotato.snake.Snake.playerToArena.put(player, this);
+        bossBar.addPlayer(Objects.requireNonNull(Bukkit.getPlayer(player)));
         Snake lastSnake = null;
         for (Snake snake : snakes)
             if (snake.players.size() != playerPerSnake)
@@ -137,12 +143,17 @@ public class SnakeGame
 
     private boolean cancelCountDown;
     private boolean countDownStarted;
-    private void CheckStart() //检查游戏是否可以开始了
+    private void CheckStart() //检查游戏是否可以开始了并修改bossBar条
     {
         int cntReady = 0;
         for (Snake snake : snakes)
             if (snake.players.size() == playerPerSnake)
                 cntReady++;
+        String title = MessageManager.msg.SnakeGame_WaitingTitle;
+        title = title.replace("<MinSnakeNum>", String.valueOf(minSnake));
+        title += "(" + cntReady + "/" + maxSnake + ")";
+        bossBar.setTitle(title);
+        bossBar.setProgress((float)cntReady/maxSnake);
         if (cntReady >= minSnake && gameStatus==GameStatus.WAITING)
         {
             cancelCountDown = false;
@@ -203,8 +214,12 @@ public class SnakeGame
 
     public void Leave(UUID player)
     {
+        bossBar.removePlayer(Objects.requireNonNull(Bukkit.getPlayer(player)));
         cn.goldenpotato.snake.Snake.playerToArena.remove(player);
         playerToGame.get(player).Leave(player);
+        if(playerToGame.get(player).players.size()==0)
+            snakes.remove(playerToGame.get(player));
+        playerToGame.remove(player);
         players.remove(player);
         Objects.requireNonNull(Bukkit.getPlayer(player)).teleport(leavePos);
     }
@@ -224,10 +239,15 @@ public class SnakeGame
             food.Disable();
         for(Snake snake : snakes)
             snake.Stop();
+        //恢复bossBar显示
+        for(UUID player : players)
+            bossBar.addPlayer(Objects.requireNonNull(Bukkit.getPlayer(player)));
     }
 
     public void Start()
     {
+        //取消bossBar显示
+        bossBar.removeAll();
         //食物启用
         for (Food food : foods)
             food.Enable();
@@ -264,6 +284,7 @@ public class SnakeGame
         Util.Message(player,"§a=========================");
         Util.Message(player, MessageManager.msg.SnakeGame_ArenaName + name);
         Util.Message(player,MessageManager.msg.SnakeGame_SnakeNum + maxSnake);
+        Util.Message(player,MessageManager.msg.SnakeGame_MinSnakeNum + minSnake);
         Util.Message(player,MessageManager.msg.SnakeGame_PlayerPerSnake + playerPerSnake);
         Util.Message(player,MessageManager.msg.SnakeGame_FoodNum + foods.size());
         Util.Message(player,MessageManager.msg.SnakeGame_SpawnNum + beginPos.size());

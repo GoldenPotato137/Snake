@@ -44,6 +44,7 @@ public class Message
     public String SubCommand_Stop_NotInGame;
     public String SnakeGame_ArenaName;
     public String SnakeGame_SnakeNum;
+    public String SnakeGame_MinSnakeNum;
     public String SnakeGame_PlayerPerSnake;
     public String SnakeGame_FoodNum;
     public String SnakeGame_SpawnNum;
@@ -53,6 +54,7 @@ public class Message
     public String SnakeGame_PlayerNum;
     public String SnakeGame_InitialSpeed;
     public String SnakeGame_CountDown;
+    public String SnakeGame_WaitingTitle;
     public String Snake_Status;
     public String Snake_Status_Dead;
     public String Snake_Status_Alive;
