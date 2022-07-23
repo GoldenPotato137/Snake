@@ -55,4 +55,9 @@ public class Message
     public String Snake_Status_Dead;
     public String Snake_Status_Alive;
     public String Snake_Player;
+    public String Snake_Facing_Up;
+    public String Snake_Facing_Down;
+    public String Snake_Facing_Left;
+    public String Snake_Facing_Right;
+    public String Snake_Facing_Null;
 }

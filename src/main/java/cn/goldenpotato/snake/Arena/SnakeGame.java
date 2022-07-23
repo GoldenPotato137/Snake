@@ -30,7 +30,7 @@ public class SnakeGame
     public World world;
     public List<Food> foods = new ArrayList<>();
     public List<Snake> snakes = new ArrayList<>();
-    private int cntAliveSnake;
+    public int cntAliveSnake,cntPlayedSnake;
     public HashMap<UUID,Snake> playerToGame = new HashMap<>();
     public List<Coordinate> beginPos = new ArrayList<>();
     public Location lobbyPos;
@@ -100,6 +100,7 @@ public class SnakeGame
 
     public List<Heading> Join(UUID player, Inventory inventory)
     {
+        cn.goldenpotato.snake.Snake.playerToArena.put(player, this);
         Snake lastSnake = null;
         for(Snake snake : snakes)
             if(snake.players.size()!=playerPerSnake)
@@ -134,6 +135,7 @@ public class SnakeGame
 
     public void Leave(UUID player)
     {
+        cn.goldenpotato.snake.Snake.playerToArena.remove(player);
         playerToGame.get(player).Leave(player);
         players.remove(player);
         Objects.requireNonNull(Bukkit.getPlayer(player)).teleport(leavePos);
@@ -170,6 +172,7 @@ public class SnakeGame
                 cntAliveSnake++;
                 snakes.get(i).StartGame(beginPos.get(i%beginPos.size()));
             }
+        cntPlayedSnake = cntAliveSnake;
         gameStatus = GameStatus.IN_GAME;
     }
 
@@ -203,5 +206,11 @@ public class SnakeGame
         for(Snake snake : snakes)
             snake.PrintStatus(player);
         Util.Message(player,"§a=========================");
+    }
+
+    public void OnRawChange(UUID player,float raw)
+    {
+        if(playerToGame.get(player)==null) return;
+        playerToGame.get(player).OnRawChange(player,raw);
     }
 }

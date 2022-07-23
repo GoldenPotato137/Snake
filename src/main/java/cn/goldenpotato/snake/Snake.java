@@ -14,11 +14,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.UUID;
 
 public final class Snake extends JavaPlugin
 {
     public static Snake instance;
     public static HashMap<String,SnakeGame> arenas;
+    public static HashMap<UUID,SnakeGame> playerToArena;
 
     @Override
     public void onEnable()
@@ -37,6 +39,7 @@ public final class Snake extends JavaPlugin
         Bukkit.getPluginManager().registerEvents(new PlayerListener(),this);
 
         arenas = new HashMap<>();
+        playerToArena = new HashMap<>();
 
         ArenaManager.LoadArenas(arenas);
     }

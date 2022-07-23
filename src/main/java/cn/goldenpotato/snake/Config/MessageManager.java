@@ -73,5 +73,10 @@ public class MessageManager
         msg.Snake_Status_Dead = messageReader.getString("Snake_Status_Dead");
         msg.Snake_Status_Alive = messageReader.getString("Snake_Status_Alive");
         msg.Snake_Player = messageReader.getString("Snake_Player");
+        msg.Snake_Facing_Up = messageReader.getString("Snake_Facing_Up");
+        msg.Snake_Facing_Down = messageReader.getString("Snake_Facing_Down");
+        msg.Snake_Facing_Left = messageReader.getString("Snake_Facing_Left");
+        msg.Snake_Facing_Right = messageReader.getString("Snake_Facing_Right");
+        msg.Snake_Facing_Null = messageReader.getString("Snake_Facing_Null");
     }
 }

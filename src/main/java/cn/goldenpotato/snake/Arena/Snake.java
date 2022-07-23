@@ -8,6 +8,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -35,6 +38,7 @@ public class Snake
     public Coordinate beginPos;
     HashMap<UUID, Inventory> inventories = new HashMap<>();
     HashMap<UUID, ItemStack[]> inventoriesBackup = new HashMap<>();
+    HashMap<UUID, BossBar> bossBars = new HashMap<>();
     public List<UUID> players = new ArrayList<>();
     public int y;
     Deque<Coordinate> snake;
@@ -56,6 +60,9 @@ public class Snake
         inventoriesBackup.put(player, inventory.getContents());
         inventory.clear();
         players.add(player);
+        //创建BossBar
+        bossBars.put(player, Bukkit.createBossBar("", BarColor.RED, BarStyle.SOLID));
+        //分配方向
         List<SnakeGame.Heading> result = new ArrayList<>();
         if (maxPlayer == 1)
         {
@@ -136,6 +143,9 @@ public class Snake
         inventories.get(player).setContents(inventoriesBackup.get(player));
         inventories.remove(player);
         inventoriesBackup.remove(player);
+        //删除BossBar
+        bossBars.get(player).removeAll();
+        bossBars.remove(player);
     }
 
     public void Stop()
@@ -151,6 +161,9 @@ public class Snake
         //清理蛇
         for (Coordinate c : snake)
             world.getBlockAt(c.x, y, c.z).setType(Material.AIR);
+        //关闭bossBar
+        for (UUID player : players)
+            bossBars.get(player).removeAll();
     }
 
     /**
@@ -164,8 +177,9 @@ public class Snake
         ticks = 0;
         for (UUID player : players)
         {
-            Util.Title(Objects.requireNonNull(cn.goldenpotato.snake.Snake.instance.getServer().getPlayer(player)), MessageManager.msg.Game_CountDown, 100);
+            Util.Title(Objects.requireNonNull(Bukkit.getPlayer(player)), MessageManager.msg.Game_CountDown, 100);
             Objects.requireNonNull(Bukkit.getPlayer(player)).teleport(new Location(world, beginPos.x, y, beginPos.z));
+            bossBars.get(player).addPlayer(Objects.requireNonNull(Bukkit.getPlayer(player)));
         }
         new BukkitRunnable()
         {
@@ -290,12 +304,12 @@ public class Snake
             inventories.get(playerRight).addItem(ItemUtil.GetItem(item.RightItem, 10));
             Util.PlaySound(Util.SoundType.FOOD_SOUND, players);
         }
-        else if (world.getBlockAt(nextPosition.x, y, nextPosition.z).getType() == Material.LIME_CONCRETE && nextPosition!=tail) //吃到别的蛇的尾部
+        else if (world.getBlockAt(nextPosition.x, y, nextPosition.z).getType() == Material.LIME_CONCRETE && nextPosition != tail) //吃到别的蛇的尾部
         {
             Snake target = game.GetSnake(nextPosition);
-            assert target!=null;
+            assert target != null;
             target.Stop();
-            while(!target.snake.isEmpty())
+            while (!target.snake.isEmpty())
                 snake.addLast(target.snake.removeFirst());
             for (Coordinate c : snake)
                 world.getBlockAt(c.x, y, c.z).setType(Material.MELON);
@@ -366,15 +380,46 @@ public class Snake
      */
     public void PrintStatus(Player player)
     {
-        Util.Message(player,"§a-----");
-        if(snakeStatus == SnakeStatus.ALIVE || snakeStatus == SnakeStatus.STOP)
-            Util.Message(player,MessageManager.msg.Snake_Status + MessageManager.msg.Snake_Status_Alive);
+        Util.Message(player, "§a-----");
+        if (snakeStatus == SnakeStatus.ALIVE || snakeStatus == SnakeStatus.STOP)
+            Util.Message(player, MessageManager.msg.Snake_Status + MessageManager.msg.Snake_Status_Alive);
         else
-            Util.Message(player,MessageManager.msg.Snake_Status + MessageManager.msg.Snake_Status_Dead);
+            Util.Message(player, MessageManager.msg.Snake_Status + MessageManager.msg.Snake_Status_Dead);
         StringBuilder temp = new StringBuilder(MessageManager.msg.Snake_Player + "[");
-        for(UUID uuid : players)
+        for (UUID uuid : players)
             temp.append(Objects.requireNonNull(Bukkit.getPlayer(uuid)).getName()).append(",");
         temp.append("]");
         Util.Message(player, temp.toString());
+    }
+
+    /**
+     * 玩家视角改变时修改bossBar显示
+     */
+    public void OnRawChange(UUID player,float raw)
+    {
+        BossBar bossBar = bossBars.get(player);
+        if(bossBar == null) return;
+        if(game.cntPlayedSnake!=0)
+            bossBar.setProgress((double) game.cntAliveSnake/ game.cntPlayedSnake);
+        if(Math.abs(raw-90) < 40)
+        {
+            bossBar.setColor(BarColor.RED);
+            bossBar.setTitle(MessageManager.msg.Snake_Facing_Up);
+        }
+        else if(Math.abs(raw-270) < 40)
+        {
+            bossBar.setColor(BarColor.BLUE);
+            bossBar.setTitle(MessageManager.msg.Snake_Facing_Down);
+        }
+        else if(Math.abs(raw-180) < 40)
+        {
+            bossBar.setColor(BarColor.YELLOW);
+            bossBar.setTitle(MessageManager.msg.Snake_Facing_Right);
+        }
+        else if(Math.abs(raw-0) < 40)
+        {
+            bossBar.setColor(BarColor.GREEN);
+            bossBar.setTitle(MessageManager.msg.Snake_Facing_Left);
+        }
     }
 }
