@@ -367,12 +367,27 @@ public class Snake
             world.getBlockAt(snake.getFirst().x, y, snake.getFirst().z).setType(Material.LIME_CONCRETE);
     }
 
+    private void HealPlayers()
+    {
+        for (UUID player : players)
+        {
+            Player p = Objects.requireNonNull(Bukkit.getPlayer(player));
+            if (p.getHealth() < 20)
+                p.setHealth(p.getHealth() + 1);
+            if(p.getFoodLevel() < 20)
+                p.setFoodLevel(p.getFoodLevel() + 1);
+        }
+    }
+
     public void Tick()
     {
         if (snakeStatus != SnakeStatus.ALIVE) return;
         ticks++;
         if (ticks % coolDownTick == 0)
+        {
             Move();
+            HealPlayers();
+        }
     }
 
     /**
@@ -395,28 +410,28 @@ public class Snake
     /**
      * 玩家视角改变时修改bossBar显示
      */
-    public void OnRawChange(UUID player,float raw)
+    public void OnRawChange(UUID player, float raw)
     {
         BossBar bossBar = bossBars.get(player);
-        if(bossBar == null) return;
-        if(game.cntPlayedSnake!=0)
-            bossBar.setProgress((double) game.cntAliveSnake/ game.cntPlayedSnake);
-        if(Math.abs(raw-90) < 40)
+        if (bossBar == null) return;
+        if (game.cntPlayedSnake != 0)
+            bossBar.setProgress((double) game.cntAliveSnake / game.cntPlayedSnake);
+        if (Math.abs(raw - 90) < 40)
         {
             bossBar.setColor(BarColor.RED);
             bossBar.setTitle(MessageManager.msg.Snake_Facing_Up);
         }
-        else if(Math.abs(raw-270) < 40)
+        else if (Math.abs(raw - 270) < 40)
         {
             bossBar.setColor(BarColor.BLUE);
             bossBar.setTitle(MessageManager.msg.Snake_Facing_Down);
         }
-        else if(Math.abs(raw-180) < 40)
+        else if (Math.abs(raw - 180) < 40)
         {
             bossBar.setColor(BarColor.YELLOW);
             bossBar.setTitle(MessageManager.msg.Snake_Facing_Right);
         }
-        else if(Math.abs(raw-0) < 40)
+        else if (Math.abs(raw - 0) < 40)
         {
             bossBar.setColor(BarColor.GREEN);
             bossBar.setTitle(MessageManager.msg.Snake_Facing_Left);
