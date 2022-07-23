@@ -17,6 +17,7 @@ public class Join extends SubCommand
     {
         name = "join";
         permission = "snake.play";
+        usage = MessageManager.msg.SubCommand_Join_Usage;
     }
     @Override
     public void onCommand(Player player, String[] args)

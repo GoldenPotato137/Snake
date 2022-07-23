@@ -15,6 +15,7 @@ public class Reload extends SubCommand
     {
         name = "reload";
         permission = "snake.admin";
+        usage = MessageManager.msg.SubCommand_Reload_Usage;
     }
 
     @Override

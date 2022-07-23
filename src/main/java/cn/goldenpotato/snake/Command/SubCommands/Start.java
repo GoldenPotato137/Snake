@@ -19,6 +19,7 @@ public class Start extends SubCommand
     {
         name="start";
         permission = "snake.start";
+        usage = MessageManager.msg.SubCommand_Start_Usage;
     }
 
     //snake start <arena>

@@ -57,7 +57,7 @@ public class SnakeGame
             {
                 CheckStart();
             }
-        }.runTaskTimer(cn.goldenpotato.snake.Snake.instance,0,60);
+        }.runTaskTimer(cn.goldenpotato.snake.Snake.instance, 0, 60);
         bossBar = Bukkit.createBossBar("", BarColor.RED, BarStyle.SOLID);
     }
 
@@ -143,6 +143,7 @@ public class SnakeGame
 
     private boolean cancelCountDown;
     private boolean countDownStarted;
+
     private void CheckStart() //检查游戏是否可以开始了并修改bossBar条
     {
         int cntReady = 0;
@@ -153,8 +154,8 @@ public class SnakeGame
         title = title.replace("<MinSnakeNum>", String.valueOf(minSnake));
         title += "(" + cntReady + "/" + maxSnake + ")";
         bossBar.setTitle(title);
-        bossBar.setProgress((float)cntReady/maxSnake);
-        if (cntReady >= minSnake && gameStatus==GameStatus.WAITING)
+        bossBar.setProgress((float) cntReady / maxSnake);
+        if (cntReady >= minSnake && gameStatus == GameStatus.WAITING)
         {
             cancelCountDown = false;
             CountDownStart();
@@ -167,29 +168,30 @@ public class SnakeGame
     {
         if (countDownStarted) return;
         countDownStarted = true;
-        for(UUID player : players)
-            Util.Title(Objects.requireNonNull(Bukkit.getPlayer(player)),MessageManager.msg.SnakeGame_CountDown,30);
+        for (UUID player : players)
+            Util.Title(Objects.requireNonNull(Bukkit.getPlayer(player)), MessageManager.msg.SnakeGame_CountDown, 30);
         new BukkitRunnable()
         {
-            int sec=30;
+            int sec = 30;
+
             @Override
             public void run()
             {
-                for(UUID player : players)
+                for (UUID player : players)
                 {
-                    if(Bukkit.getPlayer(player)==null) continue;
+                    if (Bukkit.getPlayer(player) == null) continue;
                     Objects.requireNonNull(Bukkit.getPlayer(player)).getInventory().setItem(4, new ItemStack(Material.CLOCK, sec));
                 }
-                if(sec==10)
+                if (sec == 10)
                     Start();
-                if(cancelCountDown || sec<=10)
+                if (cancelCountDown || sec <= 10)
                 {
                     CancelCountDown();
                     cancel();
                 }
                 sec--;
             }
-        }.runTaskTimer(cn.goldenpotato.snake.Snake.instance,0,20);
+        }.runTaskTimer(cn.goldenpotato.snake.Snake.instance, 0, 20);
     }
 
     private void CancelCountDown()
@@ -201,14 +203,14 @@ public class SnakeGame
     /**
      * 修改玩家控制的蛇的方向
      */
-    public void ChangeHeading(Heading heading,UUID player)
+    public void ChangeHeading(Heading heading, UUID player)
     {
-        if(playerToGame.get(player)==null) return;
+        if (playerToGame.get(player) == null) return;
         Snake snake = playerToGame.get(player);
-        if(snake.heading==Heading.UP && heading==Heading.DOWN) return;
-        if(snake.heading==Heading.DOWN && heading==Heading.UP) return;
-        if(snake.heading==Heading.LEFT && heading==Heading.RIGHT) return;
-        if(snake.heading==Heading.RIGHT && heading==Heading.LEFT) return;
+        if (snake.heading == Heading.UP && heading == Heading.DOWN) return;
+        if (snake.heading == Heading.DOWN && heading == Heading.UP) return;
+        if (snake.heading == Heading.LEFT && heading == Heading.RIGHT) return;
+        if (snake.heading == Heading.RIGHT && heading == Heading.LEFT) return;
         playerToGame.get(player).heading = heading;
     }
 
@@ -217,7 +219,7 @@ public class SnakeGame
         bossBar.removePlayer(Objects.requireNonNull(Bukkit.getPlayer(player)));
         cn.goldenpotato.snake.Snake.playerToArena.remove(player);
         playerToGame.get(player).Leave(player);
-        if(playerToGame.get(player).players.size()==0)
+        if (playerToGame.get(player).players.size() == 0)
             snakes.remove(playerToGame.get(player));
         playerToGame.remove(player);
         players.remove(player);
@@ -227,7 +229,7 @@ public class SnakeGame
     public void SnakeDie()
     {
         cntAliveSnake--;
-        if(cntAliveSnake==0)
+        if (cntAliveSnake == 0)
             Stop();
     }
 
@@ -237,10 +239,10 @@ public class SnakeGame
         gameStatus = GameStatus.WAITING;
         for (Food food : foods)
             food.Disable();
-        for(Snake snake : snakes)
+        for (Snake snake : snakes)
             snake.Stop();
         //恢复bossBar显示
-        for(UUID player : players)
+        for (UUID player : players)
             bossBar.addPlayer(Objects.requireNonNull(Bukkit.getPlayer(player)));
     }
 
@@ -253,12 +255,12 @@ public class SnakeGame
             food.Enable();
         //蛇启用
         Collections.shuffle(beginPos);
-        cntAliveSnake=0;
-        for(int i=0;i<snakes.size();i++)
-            if(snakes.get(i).players.size()==playerPerSnake)
+        cntAliveSnake = 0;
+        for (int i = 0; i < snakes.size(); i++)
+            if (snakes.get(i).players.size() == playerPerSnake)
             {
                 cntAliveSnake++;
-                snakes.get(i).StartGame(beginPos.get(i%beginPos.size()));
+                snakes.get(i).StartGame(beginPos.get(i % beginPos.size()));
             }
         cntPlayedSnake = cntAliveSnake;
         gameStatus = GameStatus.IN_GAME;
@@ -268,7 +270,7 @@ public class SnakeGame
     {
         for (Snake snake : snakes)
         {
-            Util.Log(pos.x+" "+pos.z+" "+snake.snake.getFirst().x+" "+snake.snake.getFirst().z);
+            Util.Log(pos.x + " " + pos.z + " " + snake.snake.getFirst().x + " " + snake.snake.getFirst().z);
             if (snake.snakeStatus != Snake.SnakeStatus.DEAD && snake.snake.size() >= 1
                     && snake.snake.getFirst().x == pos.x && snake.snake.getFirst().z == pos.z)
                 return snake;
@@ -281,26 +283,26 @@ public class SnakeGame
      */
     public void PrintStatus(Player player)
     {
-        Util.Message(player,"§a=========================");
+        Util.Message(player, "§a=========================");
         Util.Message(player, MessageManager.msg.SnakeGame_ArenaName + name);
-        Util.Message(player,MessageManager.msg.SnakeGame_SnakeNum + maxSnake);
-        Util.Message(player,MessageManager.msg.SnakeGame_MinSnakeNum + minSnake);
-        Util.Message(player,MessageManager.msg.SnakeGame_PlayerPerSnake + playerPerSnake);
-        Util.Message(player,MessageManager.msg.SnakeGame_FoodNum + foods.size());
-        Util.Message(player,MessageManager.msg.SnakeGame_SpawnNum + beginPos.size());
-        Util.Message(player,MessageManager.msg.SnakeGame_InitialSpeed + initialSpeed);
-        if(gameStatus == GameStatus.IN_GAME)
-            Util.Message(player,MessageManager.msg.SnakeGame_GameStatus + MessageManager.msg.SnakeGame_InGame + " ("+cntAliveSnake+")");
+        Util.Message(player, MessageManager.msg.SnakeGame_SnakeNum + maxSnake);
+        Util.Message(player, MessageManager.msg.SnakeGame_MinSnakeNum + minSnake);
+        Util.Message(player, MessageManager.msg.SnakeGame_PlayerPerSnake + playerPerSnake);
+        Util.Message(player, MessageManager.msg.SnakeGame_FoodNum + foods.size());
+        Util.Message(player, MessageManager.msg.SnakeGame_SpawnNum + beginPos.size());
+        Util.Message(player, MessageManager.msg.SnakeGame_InitialSpeed + initialSpeed);
+        if (gameStatus == GameStatus.IN_GAME)
+            Util.Message(player, MessageManager.msg.SnakeGame_GameStatus + MessageManager.msg.SnakeGame_InGame + " (" + cntAliveSnake + ")");
         else
-            Util.Message(player,MessageManager.msg.SnakeGame_GameStatus + MessageManager.msg.SnakeGame_Waiting);
-        for(Snake snake : snakes)
+            Util.Message(player, MessageManager.msg.SnakeGame_GameStatus + MessageManager.msg.SnakeGame_Waiting);
+        for (Snake snake : snakes)
             snake.PrintStatus(player);
-        Util.Message(player,"§a=========================");
+        Util.Message(player, "§a=========================");
     }
 
-    public void OnRawChange(UUID player,float raw)
+    public void OnRawChange(UUID player, float raw)
     {
-        if(playerToGame.get(player)==null) return;
-        playerToGame.get(player).OnRawChange(player,raw);
+        if (playerToGame.get(player) == null) return;
+        playerToGame.get(player).OnRawChange(player, raw);
     }
 }

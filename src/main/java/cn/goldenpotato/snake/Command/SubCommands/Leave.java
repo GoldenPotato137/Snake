@@ -16,6 +16,7 @@ public class Leave extends SubCommand
     {
         name = "leave";
         permission = "snake.play";
+        usage = MessageManager.msg.SubCommand_Leave_Usage;
     }
 
     //snake leave

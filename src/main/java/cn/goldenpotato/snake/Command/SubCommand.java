@@ -10,4 +10,5 @@ public abstract class SubCommand
     public abstract List<String> onTab(Player player, String[] args);
     public String name;
     public String permission;
+    public String usage;
 }

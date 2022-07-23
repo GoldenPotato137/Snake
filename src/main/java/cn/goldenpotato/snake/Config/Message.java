@@ -19,6 +19,8 @@ public class Message
     public String SubCommand_Create_Usage;
     public String SubCommand_Create_ArenaExist;
     public String SubCommand_Create_WrongPlayerNum;
+    public String SubCommand_Help_Usage;
+    public String SubCommand_Help_NoSuchCommand;
     public String SubCommand_Join_Usage;
     public String SubCommand_Join_AlreadyInArena;
     public String SubCommand_Join_Full;
@@ -26,6 +28,8 @@ public class Message
     public String SubCommand_Leave_Usage;
     public String SubCommand_Leave_Success;
     public String SubCommand_Leave_NotInGame;
+    public String SubCommand_Reload_Usage;
+    public String SubCommand_Save_Usage;
     public String SubCommand_Save_Success;
     public String SubCommand_Set_Usage;
     public String SubCommand_Set_ArenaNotExist;
@@ -36,6 +40,9 @@ public class Message
     public String SubCommand_Set_LobbyPosSuccess;
     public String SubCommand_Set_LeavePosSuccess;
     public String SubCommand_Start_Usage;
+    public String SubCommand_Set_Usage2;
+    public String SubCommand_Set_Usage3;
+    public String SubCommand_Set_Usage4;
     public String SubCommand_Start_ArenaNotExist;
     public String SubCommand_Start_AlreadyStart;
     public String SubCommand_Status_Usage;

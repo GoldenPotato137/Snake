@@ -14,6 +14,7 @@ public class Save extends SubCommand
     {
         name = "save";
         permission = "snake.admin";
+        usage = MessageManager.msg.SubCommand_Save_Usage;
     }
 
     @Override

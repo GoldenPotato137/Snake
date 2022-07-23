@@ -15,7 +15,7 @@ import java.util.List;
 
 public class CommandManager implements CommandExecutor, TabCompleter
 {
-    static ArrayList<SubCommand> subCommands;
+    public static ArrayList<SubCommand> subCommands;
 
     public static void Init()
     {
@@ -29,6 +29,7 @@ public class CommandManager implements CommandExecutor, TabCompleter
         subCommands.add(new Status());
         subCommands.add(new Start());
         subCommands.add(new Stop());
+        subCommands.add(new Help());
     }
 
     @Override

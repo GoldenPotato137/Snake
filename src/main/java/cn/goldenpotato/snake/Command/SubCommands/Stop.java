@@ -16,6 +16,7 @@ public class Stop extends SubCommand
     {
         name = "stop";
         permission = "snake.stop";
+        usage = MessageManager.msg.SubCommand_Stop_Usage;
     }
 
     //snake stop <arena>

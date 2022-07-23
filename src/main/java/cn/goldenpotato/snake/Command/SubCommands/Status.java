@@ -16,6 +16,7 @@ public class Status extends SubCommand
     {
         name = "status";
         permission = "snake.admin";
+        usage = MessageManager.msg.SubCommand_Status_Usage;
     }
 
     //snake status <arena>

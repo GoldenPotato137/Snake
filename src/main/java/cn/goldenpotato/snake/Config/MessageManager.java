@@ -36,6 +36,8 @@ public class MessageManager
         msg.SubCommand_Create_Usage = messageReader.getString("SubCommand_Create_Usage");
         msg.SubCommand_Create_ArenaExist = messageReader.getString("SubCommand_Create_ArenaExist");
         msg.SubCommand_Create_WrongPlayerNum = messageReader.getString("SubCommand_Create_WrongPlayerNum");
+        msg.SubCommand_Help_Usage = messageReader.getString("SubCommand_Help_Usage");
+        msg.SubCommand_Help_NoSuchCommand = messageReader.getString("SubCommand_Help_NoSuchCommand");
         msg.SubCommand_Join_Usage = messageReader.getString("SubCommand_Join_Usage");
         msg.SubCommand_Join_AlreadyInArena = messageReader.getString("SubCommand_Join_AlreadyInArena");
         msg.SubCommand_Join_Full = messageReader.getString("SubCommand_Join_Full");
@@ -43,8 +45,13 @@ public class MessageManager
         msg.SubCommand_Leave_Usage = messageReader.getString("SubCommand_Leave_Usage");
         msg.SubCommand_Leave_NotInGame = messageReader.getString("SubCommand_Leave_NotInGame");
         msg.SubCommand_Leave_Success = messageReader.getString("SubCommand_Leave_Success");
+        msg.SubCommand_Reload_Usage = messageReader.getString("SubCommand_Reload_Usage");
+        msg.SubCommand_Save_Usage = messageReader.getString("SubCommand_Save_Usage");
         msg.SubCommand_Save_Success = messageReader.getString("SubCommand_Save_Success");
         msg.SubCommand_Set_Usage = messageReader.getString("SubCommand_Set_Usage");
+        msg.SubCommand_Set_Usage2 = messageReader.getString("SubCommand_Set_Usage2");
+        msg.SubCommand_Set_Usage3 = messageReader.getString("SubCommand_Set_Usage3");
+        msg.SubCommand_Set_Usage4 = messageReader.getString("SubCommand_Set_Usage4");
         msg.SubCommand_Set_ArenaNotExist = messageReader.getString("SubCommand_Set_ArenaNotExist");
         msg.SubCommand_Set_FoodWrongName = messageReader.getString("SubCommand_Set_FoodWrongName");
         msg.SubCommand_Set_FoodAlreadyExist = messageReader.getString("SubCommand_Set_FoodAlreadyExist");

@@ -16,6 +16,7 @@ public class Create extends SubCommand
     {
         name = "create";
         permission = "snake.admin";
+        usage = MessageManager.msg.SubCommand_Create_Usage;
     }
 
     //snake create <name> <minSnake> <maxSnake> <playerPerSnake>
