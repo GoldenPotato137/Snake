@@ -6,10 +6,13 @@ import cn.goldenpotato.snake.Util.Coordinate;
 import cn.goldenpotato.snake.Util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
@@ -26,12 +29,13 @@ public class SnakeGame
     }
 
     public String name;
-    public int maxSnake,maxPlayer,playerPerSnake;
+    public int maxSnake, minSnake, maxPlayer, playerPerSnake;
+    public int initialSpeed = 10;
     public World world;
     public List<Food> foods = new ArrayList<>();
     public List<Snake> snakes = new ArrayList<>();
-    public int cntAliveSnake,cntPlayedSnake;
-    public HashMap<UUID,Snake> playerToGame = new HashMap<>();
+    public int cntAliveSnake, cntPlayedSnake;
+    public HashMap<UUID, Snake> playerToGame = new HashMap<>();
     public List<Coordinate> beginPos = new ArrayList<>();
     public Location lobbyPos;
     public Location leavePos;
@@ -42,6 +46,14 @@ public class SnakeGame
     void Init()
     {
         maxPlayer = maxSnake * playerPerSnake;
+        new BukkitRunnable()
+        {
+            @Override
+            public void run()
+            {
+                CheckStart();
+            }
+        }.runTaskTimer(cn.goldenpotato.snake.Snake.instance,0,60);
     }
 
     /**
@@ -53,24 +65,26 @@ public class SnakeGame
         assert in != null;
         this.name = name;
         maxSnake = in.getInt("maxSnake", 1);
+        minSnake = in.getInt("minSnake", 1);
         playerPerSnake = in.getInt("playerPerSnake", 1);
         world = Bukkit.getWorld(Objects.requireNonNull(in.getString("world", "world")));
+        initialSpeed = in.getInt("initialSpeed", 10);
         y = in.getInt("y", 64);
         //beginPos
         in = ArenaManager.arenaReader.getConfigurationSection("ArenaList." + name + ".beginPos");
-        if(in!=null)
+        if (in != null)
             for (String no : in.getKeys(false))
                 beginPos.add(new Coordinate(in.getInt(no + ".x"), in.getInt(no + ".z")));
         //lobbyPos
         in = ArenaManager.arenaReader.getConfigurationSection("ArenaList." + name + ".lobbyPos");
-        lobbyPos = new Location(world,0,64,0);
-        if(in!=null)
-            lobbyPos = new Location(world,in.getInt("x",0),in.getInt("y",64),in.getInt("z",0));
+        lobbyPos = new Location(world, 0, 64, 0);
+        if (in != null)
+            lobbyPos = new Location(world, in.getInt("x", 0), in.getInt("y", 64), in.getInt("z", 0));
         //leavePos
         in = ArenaManager.arenaReader.getConfigurationSection("ArenaList." + name + ".leavePos");
-        leavePos = new Location(world,0,64,0);
-        if(in!=null)
-            leavePos = new Location(world,in.getInt("x",0),in.getInt("y",64),in.getInt("z",0));
+        leavePos = new Location(world, 0, 64, 0);
+        if (in != null)
+            leavePos = new Location(world, in.getInt("x", 0), in.getInt("y", 64), in.getInt("z", 0));
         //foods
         in = ArenaManager.arenaReader.getConfigurationSection("ArenaList." + name + ".food");
         if (in != null)
@@ -85,9 +99,10 @@ public class SnakeGame
         Init();
     }
 
-    public SnakeGame(String name, int maxSnake,int playerPerSnake, Location location)
+    public SnakeGame(String name, int minSnake, int maxSnake, int playerPerSnake, Location location)
     {
         this.name = name;
+        this.minSnake = minSnake;
         this.maxSnake = maxSnake;
         this.playerPerSnake = playerPerSnake;
         this.y = location.getBlockY();
@@ -102,21 +117,74 @@ public class SnakeGame
     {
         cn.goldenpotato.snake.Snake.playerToArena.put(player, this);
         Snake lastSnake = null;
-        for(Snake snake : snakes)
-            if(snake.players.size()!=playerPerSnake)
+        for (Snake snake : snakes)
+            if (snake.players.size() != playerPerSnake)
             {
                 lastSnake = snake;
                 break;
             }
-        if(lastSnake==null)
+        if (lastSnake == null)
         {
             lastSnake = new Snake(this);
             snakes.add(lastSnake);
         }
         Objects.requireNonNull(Bukkit.getPlayer(player)).teleport(lobbyPos);
-        playerToGame.put(player,lastSnake);
+        playerToGame.put(player, lastSnake);
         players.add(player);
-        return lastSnake.Join(player,inventory);
+        CheckStart();
+        return lastSnake.Join(player, inventory);
+    }
+
+    private boolean cancelCountDown;
+    private boolean countDownStarted;
+    private void CheckStart() //检查游戏是否可以开始了
+    {
+        int cntReady = 0;
+        for (Snake snake : snakes)
+            if (snake.players.size() == playerPerSnake)
+                cntReady++;
+        if (cntReady >= minSnake && gameStatus==GameStatus.WAITING)
+        {
+            cancelCountDown = false;
+            CountDownStart();
+        }
+        else
+            CancelCountDown();
+    }
+
+    private void CountDownStart()
+    {
+        if (countDownStarted) return;
+        countDownStarted = true;
+        for(UUID player : players)
+            Util.Title(Objects.requireNonNull(Bukkit.getPlayer(player)),MessageManager.msg.SnakeGame_CountDown,30);
+        new BukkitRunnable()
+        {
+            int sec=30;
+            @Override
+            public void run()
+            {
+                for(UUID player : players)
+                {
+                    if(Bukkit.getPlayer(player)==null) continue;
+                    Objects.requireNonNull(Bukkit.getPlayer(player)).getInventory().setItem(4, new ItemStack(Material.CLOCK, sec));
+                }
+                if(sec==10)
+                    Start();
+                if(cancelCountDown || sec<=10)
+                {
+                    CancelCountDown();
+                    cancel();
+                }
+                sec--;
+            }
+        }.runTaskTimer(cn.goldenpotato.snake.Snake.instance,0,20);
+    }
+
+    private void CancelCountDown()
+    {
+        cancelCountDown = true;
+        countDownStarted = false;
     }
 
     /**
@@ -199,6 +267,7 @@ public class SnakeGame
         Util.Message(player,MessageManager.msg.SnakeGame_PlayerPerSnake + playerPerSnake);
         Util.Message(player,MessageManager.msg.SnakeGame_FoodNum + foods.size());
         Util.Message(player,MessageManager.msg.SnakeGame_SpawnNum + beginPos.size());
+        Util.Message(player,MessageManager.msg.SnakeGame_InitialSpeed + initialSpeed);
         if(gameStatus == GameStatus.IN_GAME)
             Util.Message(player,MessageManager.msg.SnakeGame_GameStatus + MessageManager.msg.SnakeGame_InGame + " ("+cntAliveSnake+")");
         else

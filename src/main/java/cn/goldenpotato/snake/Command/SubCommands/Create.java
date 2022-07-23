@@ -18,11 +18,11 @@ public class Create extends SubCommand
         permission = "snake.admin";
     }
 
-    //snake create <name> <maxSnake> <playerPerSnake>
+    //snake create <name> <minSnake> <maxSnake> <playerPerSnake>
     @Override
     public void onCommand(Player player, String[] args)
     {
-        if(args.length<3)
+        if(args.length<4)
         {
             Util.Message(player, MessageManager.msg.SubCommand_Create_Usage);
             return;
@@ -32,23 +32,24 @@ public class Create extends SubCommand
             Util.Message(player, MessageManager.msg.SubCommand_Create_ArenaExist);
             return;
         }
-        int maxSnake,playerPerSnake;
+        int maxSnake,minSnake,playerPerSnake;
         try
         {
-            maxSnake = Integer.parseInt(args[1]);
-            playerPerSnake = Integer.parseInt(args[2]);
+            minSnake = Integer.parseInt(args[1]);
+            maxSnake = Integer.parseInt(args[2]);
+            playerPerSnake = Integer.parseInt(args[3]);
         }
         catch (Exception e)
         {
             Util.Message(player,MessageManager.msg.Util_WrongNum);
             return;
         }
-        if(playerPerSnake!=1 && playerPerSnake!=2 && playerPerSnake!=4)
+        if(playerPerSnake!=1 && playerPerSnake!=2 && playerPerSnake!=4 || minSnake>maxSnake)
         {
-            Util.Message(player,MessageManager.msg.SubCommand_Create_WrongPlayerNum);
+            Util.Message(player,MessageManager.msg.SubCommand_Create_Usage);
             return;
         }
-        SnakeGame game = new SnakeGame(args[0],maxSnake,playerPerSnake,player.getLocation());
+        SnakeGame game = new SnakeGame(args[0],minSnake,maxSnake,playerPerSnake,player.getLocation());
         Snake.arenas.put(args[0],game);
     }
 

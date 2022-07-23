@@ -36,8 +36,10 @@ public class ArenaManager
         if (out==null)
             out=arenaReader.createSection("ArenaList."+arena.name);
         out.set("maxSnake",arena.maxSnake);
+        out.set("minSnake",arena.minSnake);
         out.set("playerPerSnake",arena.playerPerSnake);
         out.set("world",arena.world.getName());
+        out.set("initialSpeed",arena.initialSpeed);
         out.set("y",arena.y);
         out.set("lobbyPos.x",arena.lobbyPos.getBlockX());
         out.set("lobbyPos.y",arena.lobbyPos.getBlockY());

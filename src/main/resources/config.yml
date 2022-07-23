@@ -2,6 +2,9 @@ Language: zh-CN
 
 Game:
   FoodPercentage: 0.05
+  MaxMoveTools: 30
+  ToolsPerFood: 5
+  InitialTools: 10
 
 Sound:
   PlayEatSound: true

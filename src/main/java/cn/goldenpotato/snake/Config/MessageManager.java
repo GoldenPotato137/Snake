@@ -69,6 +69,8 @@ public class MessageManager
         msg.SnakeGame_InGame = messageReader.getString("SnakeGame_InGame");
         msg.SnakeGame_Waiting = messageReader.getString("SnakeGame_Waiting");
         msg.SnakeGame_PlayerNum = messageReader.getString("SnakeGame_PlayerNum");
+        msg.SnakeGame_InitialSpeed = messageReader.getString("SnakeGame_InitialSpeed");
+        msg.SnakeGame_CountDown = messageReader.getString("SnakeGame_CountDown");
         msg.Snake_Status = messageReader.getString("Snake_Status");
         msg.Snake_Status_Dead = messageReader.getString("Snake_Status_Dead");
         msg.Snake_Status_Alive = messageReader.getString("Snake_Status_Alive");

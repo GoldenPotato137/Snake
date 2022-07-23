@@ -1,5 +1,6 @@
 package cn.goldenpotato.snake.Arena;
 
+import cn.goldenpotato.snake.Config.ConfigManager;
 import cn.goldenpotato.snake.Config.MessageManager;
 import cn.goldenpotato.snake.Util.Coordinate;
 import cn.goldenpotato.snake.Util.ItemUtil;
@@ -213,15 +214,15 @@ public class Snake
         heading = SnakeGame.Heading.UP;
         //发放物品
         if (playerUp != null)
-            inventories.get(playerUp).addItem(ItemUtil.GetItem(item.UpItem, 30));
+            inventories.get(playerUp).addItem(ItemUtil.GetItem(item.upItem, ConfigManager.config.initialTools));
         if (playerDown != null)
-            inventories.get(playerDown).addItem(ItemUtil.GetItem(item.DownItem, 30));
+            inventories.get(playerDown).addItem(ItemUtil.GetItem(item.downItem, ConfigManager.config.initialTools));
         if (playerLeft != null)
-            inventories.get(playerLeft).addItem(ItemUtil.GetItem(item.LeftItem, 30));
+            inventories.get(playerLeft).addItem(ItemUtil.GetItem(item.leftItem, ConfigManager.config.initialTools));
         if (playerRight != null)
-            inventories.get(playerRight).addItem(ItemUtil.GetItem(item.RightItem, 30));
+            inventories.get(playerRight).addItem(ItemUtil.GetItem(item.rightItem, ConfigManager.config.initialTools));
         //倒计时开始timer
-        coolDownTick = 10 - maxPlayer;
+        coolDownTick = game.initialSpeed - maxPlayer;
         task = new BukkitRunnable()
         {
             @Override
@@ -286,22 +287,22 @@ public class Snake
         }
         else if (world.getBlockAt(nextPosition.x, y, nextPosition.z).getType() == Material.REDSTONE_BLOCK) //奖励：上
         {
-            inventories.get(playerUp).addItem(ItemUtil.GetItem(item.UpItem, 10));
+            item.GiveMoveTools(playerUp, SnakeGame.Heading.UP);
             Util.PlaySound(Util.SoundType.FOOD_SOUND, players);
         }
         else if (world.getBlockAt(nextPosition.x, y, nextPosition.z).getType() == Material.LAPIS_BLOCK) //奖励：下
         {
-            inventories.get(playerDown).addItem(ItemUtil.GetItem(item.DownItem, 10));
+            item.GiveMoveTools(playerDown, SnakeGame.Heading.DOWN);
             Util.PlaySound(Util.SoundType.FOOD_SOUND, players);
         }
         else if (world.getBlockAt(nextPosition.x, y, nextPosition.z).getType() == Material.EMERALD_BLOCK) //奖励：左
         {
-            inventories.get(playerLeft).addItem(ItemUtil.GetItem(item.LeftItem, 10));
+            item.GiveMoveTools(playerLeft, SnakeGame.Heading.LEFT);
             Util.PlaySound(Util.SoundType.FOOD_SOUND, players);
         }
         else if (world.getBlockAt(nextPosition.x, y, nextPosition.z).getType() == Material.GOLD_BLOCK) //奖励：右
         {
-            inventories.get(playerRight).addItem(ItemUtil.GetItem(item.RightItem, 10));
+            item.GiveMoveTools(playerRight, SnakeGame.Heading.RIGHT);
             Util.PlaySound(Util.SoundType.FOOD_SOUND, players);
         }
         else if (world.getBlockAt(nextPosition.x, y, nextPosition.z).getType() == Material.LIME_CONCRETE && nextPosition != tail) //吃到别的蛇的尾部

@@ -51,6 +51,8 @@ public class Message
     public String SnakeGame_InGame;
     public String SnakeGame_Waiting;
     public String SnakeGame_PlayerNum;
+    public String SnakeGame_InitialSpeed;
+    public String SnakeGame_CountDown;
     public String Snake_Status;
     public String Snake_Status_Dead;
     public String Snake_Status_Alive;

@@ -9,4 +9,7 @@ public class Config
     public boolean playEatSound;
     public boolean playLossSound;
     public boolean playCountDownSound;
+    public int maxMoveTools;
+    public int toolsPerFood;
+    public int initialTools;
 }

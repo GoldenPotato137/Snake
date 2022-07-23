@@ -24,7 +24,7 @@ public class ConfigManager
         configuration = Snake.instance.getConfig();
         //Language
         config.language = configuration.getString("Language", "en-WW");
-        Util.Log("Using language: " + config.language);
+        Util.Log("Using locale: " + config.language);
         //Command
         config.lossCommand = configuration.getString("Command.LossCommand");
         if (config.lossCommand != null && config.lossCommand.equals("[null]"))
@@ -38,5 +38,8 @@ public class ConfigManager
         config.playCountDownSound = configuration.getBoolean("Sound.PlayCountDownSound", true);
         //Game
         config.foodPercentage = configuration.getDouble("Game.FoodPercentage", 0.05);
+        config.maxMoveTools = configuration.getInt("Game.MaxMoveTools", 30);
+        config.toolsPerFood = configuration.getInt("Game.ToolsPerFood", 5);
+        config.initialTools = configuration.getInt("Game.InitialTools", 10);
     }
 }
