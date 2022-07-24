@@ -20,16 +20,17 @@ public class CommandManager implements CommandExecutor, TabCompleter
     public static void Init()
     {
         subCommands = new ArrayList<>();
+        subCommands.add(new Create());
+        subCommands.add(new Game());
+        subCommands.add(new Help());
         subCommands.add(new Join());
         subCommands.add(new Leave());
         subCommands.add(new Reload());
-        subCommands.add(new Create());
-        subCommands.add(new Set());
         subCommands.add(new Save());
-        subCommands.add(new Status());
+        subCommands.add(new Set());
         subCommands.add(new Start());
+        subCommands.add(new Status());
         subCommands.add(new Stop());
-        subCommands.add(new Help());
     }
 
     @Override

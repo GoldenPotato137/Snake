@@ -37,10 +37,7 @@ public class Join extends SubCommand
         if(game!=null)
         {
             if(game.maxPlayer > game.players.size())
-            {
-                List<SnakeGame.Heading> result = game.Join(player.getUniqueId(), player.getInventory());
-                Message(player,result.toString());
-            }
+                game.Join(player.getUniqueId(), player.getInventory());
             else
                 Message(player,MessageManager.msg.SubCommand_Join_Full);
         }

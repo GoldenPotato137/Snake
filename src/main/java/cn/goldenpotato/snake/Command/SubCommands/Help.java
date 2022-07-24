@@ -14,7 +14,7 @@ public class Help extends SubCommand
     public Help()
     {
         name = "help";
-        permission = "snake.admin";
+        permission = "snake.help";
         usage = MessageManager.msg.SubCommand_Help_Usage;
     }
 

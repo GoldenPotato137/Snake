@@ -37,6 +37,11 @@ public class MessageManager
         msg.SubCommand_Create_Usage = messageReader.getString("SubCommand_Create_Usage");
         msg.SubCommand_Create_ArenaExist = messageReader.getString("SubCommand_Create_ArenaExist");
         msg.SubCommand_Create_WrongPlayerNum = messageReader.getString("SubCommand_Create_WrongPlayerNum");
+        msg.SubCommand_Game_Usage = messageReader.getString("SubCommand_Game_Usage");
+        msg.SubCommand_Game_Help_1 = messageReader.getString("SubCommand_Game_Help_1");
+        msg.SubCommand_Game_Help_2 = messageReader.getString("SubCommand_Game_Help_2");
+        msg.SubCommand_Game_Help_3 = messageReader.getString("SubCommand_Game_Help_3");
+        msg.SubCommand_Game_Help_4 = messageReader.getString("SubCommand_Game_Help_4");
         msg.SubCommand_Help_Usage = messageReader.getString("SubCommand_Help_Usage");
         msg.SubCommand_Help_NoSuchCommand = messageReader.getString("SubCommand_Help_NoSuchCommand");
         msg.SubCommand_Join_Usage = messageReader.getString("SubCommand_Join_Usage");
@@ -83,6 +88,10 @@ public class MessageManager
         msg.SnakeGame_WaitingTitle = messageReader.getString("SnakeGame_WaitingTitle");
         msg.SnakeGame_VictoryConditionLength = messageReader.getString("SnakeGame_VictoryConditionLength");
         msg.SnakeGame_VictoryConditionSnake = messageReader.getString("SnakeGame_VictoryConditionSnake");
+        msg.Snake_Welcome = messageReader.getString("Snake_Welcome");
+        msg.Snake_Welcome_Control = messageReader.getString("Snake_Welcome_Control");
+        msg.Snake_Welcome_Teammate = messageReader.getString("Snake_Welcome_Teammate");
+        msg.Snake_Welcome_Help = messageReader.getString("Snake_Welcome_Help");
         msg.Snake_Status = messageReader.getString("Snake_Status");
         msg.Snake_Status_Dead = messageReader.getString("Snake_Status_Dead");
         msg.Snake_Status_Alive = messageReader.getString("Snake_Status_Alive");

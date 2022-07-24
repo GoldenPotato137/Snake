@@ -33,7 +33,7 @@ public class Snake
     public SnakeGame.Heading heading;
     public int maxPlayer;
     int ticks = 0, coolDownTick;
-    int length , maxLength; //当前长度，达到过的最大长度
+    int length, maxLength; //当前长度，达到过的最大长度
     public UUID playerUp, playerDown, playerLeft, playerRight;
     public World world;
     public Coordinate beginPos;
@@ -54,8 +54,12 @@ public class Snake
         y = game.y;
     }
 
-    public List<SnakeGame.Heading> Join(UUID player, Inventory inventory)
+    public void Join(UUID player, Inventory inventory)
     {
+        StringBuilder str = new StringBuilder();
+        for (UUID t : players)
+            str.append(Objects.requireNonNull(Bukkit.getPlayer(t)).getName()).append(" ");
+        Util.Message(players, MessageManager.msg.Snake_Welcome_Teammate + str);
         //寄存物品并清空背包
         inventories.put(player, inventory);
         inventoriesBackup.put(player, inventory.getContents());
@@ -113,7 +117,25 @@ public class Snake
         }
         item.SetItem(game.name, playerUp, playerDown, playerLeft, playerRight);
         StandBy(player);
-        return result;
+        WelcomeMessage(player, result);
+    }
+
+    private void WelcomeMessage(UUID player, List<SnakeGame.Heading> headings)
+    {
+        Player p = Bukkit.getPlayer(player);
+        if (p == null) return;
+        Util.Message(p, MessageManager.msg.Snake_Welcome + game.name);
+        String winCondition = MessageManager.msg.SnakeGame_VictoryConditionLength;
+        if (game.victoryCondition == 1)
+            winCondition = MessageManager.msg.SnakeGame_VictoryConditionSnake;
+        winCondition = winCondition.replace("<num>", String.valueOf(game.victory));
+        Util.Message(p, winCondition);
+        StringBuilder str = new StringBuilder();
+        for (UUID t : players)
+            str.append(Objects.requireNonNull(Bukkit.getPlayer(t)).getName()).append(" ");
+        Util.Message(p, MessageManager.msg.Snake_Welcome_Teammate + str);
+        Util.Message(p, MessageManager.msg.Snake_Welcome_Control + headings.toString());
+        Util.Message(p, MessageManager.msg.Snake_Welcome_Help);
     }
 
     void StandBy(UUID player)
@@ -152,12 +174,12 @@ public class Snake
     private void SnakeStop()
     {
         snakeStatus = SnakeStatus.DEAD;
-        if(task!=null)
+        if (task != null)
             task.cancel();
         for (UUID player : players)
             StandBy(player);
         //清理蛇
-        if(snake!=null)
+        if (snake != null)
             for (Coordinate c : snake)
                 world.getBlockAt(c.x, y, c.z).setType(Material.AIR);
         //关闭bossBar
@@ -212,7 +234,7 @@ public class Snake
             @Override
             public void run()
             {
-                if(snakeStatus != SnakeStatus.ALIVE)
+                if (snakeStatus != SnakeStatus.ALIVE)
                 {
                     cancel();
                     return;
@@ -396,7 +418,7 @@ public class Snake
             world.getBlockAt(snake.getFirst().x, y, snake.getFirst().z).setType(Material.LIME_CONCRETE);
         //更新长度信息
         length = snake.size();
-        maxLength = Math.max(length,maxLength);
+        maxLength = Math.max(length, maxLength);
     }
 
     private void HealPlayers()
@@ -406,7 +428,7 @@ public class Snake
             Player p = Objects.requireNonNull(Bukkit.getPlayer(player));
             if (p.getHealth() < 20)
                 p.setHealth(p.getHealth() + 1);
-            if(p.getFoodLevel() < 20)
+            if (p.getFoodLevel() < 20)
                 p.setFoodLevel(p.getFoodLevel() + 1);
         }
     }

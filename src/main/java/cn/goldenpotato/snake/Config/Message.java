@@ -20,6 +20,11 @@ public class Message
     public String SubCommand_Create_Usage;
     public String SubCommand_Create_ArenaExist;
     public String SubCommand_Create_WrongPlayerNum;
+    public String SubCommand_Game_Usage;
+    public String SubCommand_Game_Help_1;
+    public String SubCommand_Game_Help_2;
+    public String SubCommand_Game_Help_3;
+    public String SubCommand_Game_Help_4;
     public String SubCommand_Help_Usage;
     public String SubCommand_Help_NoSuchCommand;
     public String SubCommand_Join_Usage;
@@ -65,6 +70,10 @@ public class Message
     public String SnakeGame_WaitingTitle;
     public String SnakeGame_VictoryConditionLength;
     public String SnakeGame_VictoryConditionSnake;
+    public String Snake_Welcome;
+    public String Snake_Welcome_Control;
+    public String Snake_Welcome_Teammate;
+    public String Snake_Welcome_Help;
     public String Snake_Status;
     public String Snake_Status_Dead;
     public String Snake_Status_Alive;

@@ -137,7 +137,7 @@ public class SnakeGame
         Init();
     }
 
-    public List<Heading> Join(UUID player, Inventory inventory)
+    public void Join(UUID player, Inventory inventory)
     {
         cn.goldenpotato.snake.Snake.playerToArena.put(player, this);
         bossBar.addPlayer(Objects.requireNonNull(Bukkit.getPlayer(player)));
@@ -157,7 +157,7 @@ public class SnakeGame
         playerToGame.put(player, lastSnake);
         players.add(player);
         CheckStart();
-        return lastSnake.Join(player, inventory);
+        lastSnake.Join(player, inventory);
     }
 
     private boolean cancelCountDown;
