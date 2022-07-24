@@ -15,6 +15,7 @@ public class Message
     public String Item_Leave_Lore;
     public String Game_CountDown;
     public String Game_Loss;
+    public String Game_Victory;
     public String Command_CommandManager_NoCommandInConsole;
     public String SubCommand_Create_Usage;
     public String SubCommand_Create_ArenaExist;
@@ -62,6 +63,8 @@ public class Message
     public String SnakeGame_InitialSpeed;
     public String SnakeGame_CountDown;
     public String SnakeGame_WaitingTitle;
+    public String SnakeGame_VictoryConditionLength;
+    public String SnakeGame_VictoryConditionSnake;
     public String Snake_Status;
     public String Snake_Status_Dead;
     public String Snake_Status_Alive;

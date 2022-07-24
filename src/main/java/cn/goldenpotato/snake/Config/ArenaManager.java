@@ -40,7 +40,12 @@ public class ArenaManager
         out.set("playerPerSnake",arena.playerPerSnake);
         out.set("world",arena.world.getName());
         out.set("initialSpeed",arena.initialSpeed);
+        if(arena.victoryCondition == 0)
+            out.set("victoryCondition","length");
+        else
+            out.set("victoryCondition","snakeNum");
         out.set("y",arena.y);
+        out.set("victory",arena.victory);
         out.set("lobbyPos.x",arena.lobbyPos.getBlockX());
         out.set("lobbyPos.y",arena.lobbyPos.getBlockY());
         out.set("lobbyPos.z",arena.lobbyPos.getBlockZ());

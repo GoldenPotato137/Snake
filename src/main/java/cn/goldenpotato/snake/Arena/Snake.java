@@ -33,7 +33,7 @@ public class Snake
     public SnakeGame.Heading heading;
     public int maxPlayer;
     int ticks = 0, coolDownTick;
-    int length;
+    int length , maxLength; //当前长度，达到过的最大长度
     public UUID playerUp, playerDown, playerLeft, playerRight;
     public World world;
     public Coordinate beginPos;
@@ -132,7 +132,7 @@ public class Snake
     public void Leave(UUID player)
     {
         if (snakeStatus != SnakeStatus.DEAD)
-            Stop();
+            Loss();
         if (!players.contains(player)) return;
         if (playerUp == player) playerUp = null;
         if (playerDown == player) playerDown = null;
@@ -149,26 +149,47 @@ public class Snake
         bossBars.remove(player);
     }
 
-    public void Stop()
+    private void SnakeStop()
     {
-        if (snakeStatus == SnakeStatus.DEAD) return;
-        for (UUID player : players)
-            Util.Title(Objects.requireNonNull(Bukkit.getPlayer(player)), MessageManager.msg.Game_Loss, 30);
         snakeStatus = SnakeStatus.DEAD;
-        game.SnakeDie();
-        task.cancel();
+        if(task!=null)
+            task.cancel();
         for (UUID player : players)
             StandBy(player);
         //清理蛇
-        for (Coordinate c : snake)
-            world.getBlockAt(c.x, y, c.z).setType(Material.AIR);
+        if(snake!=null)
+            for (Coordinate c : snake)
+                world.getBlockAt(c.x, y, c.z).setType(Material.AIR);
         //关闭bossBar
         for (UUID player : players)
             bossBars.get(player).removeAll();
+        game.SnakeDie();
+    }
+
+    public void Loss()
+    {
+        if (snakeStatus == SnakeStatus.DEAD) return;
+        if (game.victoryCondition == 0 && maxLength >= game.victory)
+        {
+            Victory();
+            return;
+        }
+        for (UUID player : players)
+            Util.Title(Objects.requireNonNull(Bukkit.getPlayer(player)), MessageManager.msg.Game_Loss, 30);
+        SnakeStop();
+    }
+
+    public void Victory()
+    {
+        if (snakeStatus == SnakeStatus.DEAD) return;
+        for (UUID player : players)
+            Util.Title(Objects.requireNonNull(Bukkit.getPlayer(player)), MessageManager.msg.Game_Victory, 30);
+        SnakeStop();
     }
 
     /**
      * 启用这条蛇
+     * 倒计时十秒开始，最后三秒游戏进入环节:New Game
      */
     void StartGame(Coordinate beginPos)
     {
@@ -189,6 +210,11 @@ public class Snake
             @Override
             public void run()
             {
+                if(snakeStatus != SnakeStatus.ALIVE)
+                {
+                    cancel();
+                    return;
+                }
                 if (sec <= 6)
                     Util.PlaySound(Util.SoundType.COUNT_DOWN, players);
                 else
@@ -210,7 +236,7 @@ public class Snake
         snake = new LinkedList<>();
         snake.add(beginPos);
         world.getBlockAt(beginPos.x, y, beginPos.z).setType(Material.PUMPKIN);
-        length = 1;
+        maxLength = length = 1;
         heading = SnakeGame.Heading.UP;
         //发放物品
         if (playerUp != null)
@@ -309,7 +335,7 @@ public class Snake
         {
             Snake target = game.GetSnake(nextPosition);
             assert target != null;
-            target.Stop();
+            target.Loss();
             while (!target.snake.isEmpty())
                 snake.addLast(target.snake.removeFirst());
             for (Coordinate c : snake)
@@ -325,7 +351,7 @@ public class Snake
         {
             Util.PlaySound(Util.SoundType.LOSS_SOUND, players);
             if (snake.size() < 2)
-                Stop();
+                Loss();
             else //扣长度&&加速
             {
                 Coordinate pos = snake.removeLast();
@@ -366,6 +392,9 @@ public class Snake
         //蛇尾方块为黄绿混凝土
         if (snake.size() >= 2)
             world.getBlockAt(snake.getFirst().x, y, snake.getFirst().z).setType(Material.LIME_CONCRETE);
+        //更新长度信息
+        length = snake.size();
+        maxLength = Math.max(length,maxLength);
     }
 
     private void HealPlayers()

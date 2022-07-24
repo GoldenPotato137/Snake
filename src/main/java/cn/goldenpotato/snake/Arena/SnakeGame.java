@@ -31,20 +31,20 @@ public class SnakeGame
         UP, DOWN, LEFT, RIGHT
     }
 
-    public String name;
-    public int maxSnake, minSnake, maxPlayer, playerPerSnake;
-    public int initialSpeed = 10;
-    public World world;
+    public String name; //场地名字
+    public int maxSnake, minSnake, maxPlayer, playerPerSnake; //最大蛇数，最小蛇数，最大玩家数，每蛇玩家数
+    public int initialSpeed = 10; //初始蛇运动间隔时间
+    public World world; //场地所在世界
     public List<Food> foods = new ArrayList<>();
     public List<Snake> snakes = new ArrayList<>();
-    public int cntAliveSnake, cntPlayedSnake;
+    public int cntAliveSnake, cntPlayedSnake; // 存活的蛇数量，开始游戏的蛇数量
     public HashMap<UUID, Snake> playerToGame = new HashMap<>();
     public List<Coordinate> beginPos = new ArrayList<>();
-    public Location lobbyPos;
-    public Location leavePos;
+    public Location lobbyPos,leavePos; //大厅位置，离开位置
     public List<UUID> players = new ArrayList<>();
-    public int y;
-    public GameStatus gameStatus = GameStatus.WAITING;
+    public int y; //场地y轴高度
+    public GameStatus gameStatus = GameStatus.WAITING; //游戏状态
+    public int victoryCondition,victory; //胜利条件(0:曾到达最长长度，1:坚持到最后若干条蛇)及胜利具体值
     private BossBar bossBar;
 
     void Init()
@@ -74,6 +74,16 @@ public class SnakeGame
         playerPerSnake = in.getInt("playerPerSnake", 1);
         world = Bukkit.getWorld(Objects.requireNonNull(in.getString("world", "world")));
         initialSpeed = in.getInt("initialSpeed", 10);
+        //victory
+        String victoryConditionStr = in.getString("victoryCondition", "length");
+        if(Objects.equals(victoryConditionStr, "length"))
+            victoryCondition = 0;
+        else
+            victoryCondition = 1;
+        if(victoryCondition==0)
+            victory = in.getInt("victory", 10);
+        else
+            victory = in.getInt("victory", 1);
         y = in.getInt("y", 64);
         //beginPos
         in = ArenaManager.arenaReader.getConfigurationSection("ArenaList." + name + ".beginPos");
@@ -107,6 +117,8 @@ public class SnakeGame
     public SnakeGame(String name, int minSnake, int maxSnake, int playerPerSnake, Location location)
     {
         this.name = name;
+        this.victoryCondition = 0;
+        this.victory = 10;
         this.minSnake = minSnake;
         this.maxSnake = maxSnake;
         this.playerPerSnake = playerPerSnake;
@@ -216,19 +228,25 @@ public class SnakeGame
 
     public void Leave(UUID player)
     {
-        bossBar.removePlayer(Objects.requireNonNull(Bukkit.getPlayer(player)));
-        cn.goldenpotato.snake.Snake.playerToArena.remove(player);
         playerToGame.get(player).Leave(player);
+        cn.goldenpotato.snake.Snake.playerToArena.remove(player);
         if (playerToGame.get(player).players.size() == 0)
             snakes.remove(playerToGame.get(player));
         playerToGame.remove(player);
         players.remove(player);
         Objects.requireNonNull(Bukkit.getPlayer(player)).teleport(leavePos);
+        bossBar.removePlayer(Objects.requireNonNull(Bukkit.getPlayer(player)));
     }
 
     public void SnakeDie()
     {
         cntAliveSnake--;
+        if(victoryCondition==1 && cntAliveSnake==victory)
+        {
+            for (Snake snake : snakes)
+                snake.Victory();
+            cntAliveSnake=0;
+        }
         if (cntAliveSnake == 0)
             Stop();
     }
@@ -240,7 +258,7 @@ public class SnakeGame
         for (Food food : foods)
             food.Disable();
         for (Snake snake : snakes)
-            snake.Stop();
+            snake.Loss();
         //恢复bossBar显示
         for (UUID player : players)
             bossBar.addPlayer(Objects.requireNonNull(Bukkit.getPlayer(player)));
@@ -248,6 +266,8 @@ public class SnakeGame
 
     public void Start()
     {
+        if (gameStatus != GameStatus.WAITING) return;
+        cancelCountDown = true;
         //取消bossBar显示
         bossBar.removeAll();
         //食物启用
@@ -285,6 +305,11 @@ public class SnakeGame
     {
         Util.Message(player, "§a=========================");
         Util.Message(player, MessageManager.msg.SnakeGame_ArenaName + name);
+        String winCondition = MessageManager.msg.SnakeGame_VictoryConditionLength;
+        if(victoryCondition == 1)
+            winCondition = MessageManager.msg.SnakeGame_VictoryConditionSnake;
+        winCondition = winCondition.replace("<num>", String.valueOf(victory));
+        Util.Message(player, winCondition);
         Util.Message(player, MessageManager.msg.SnakeGame_SnakeNum + maxSnake);
         Util.Message(player, MessageManager.msg.SnakeGame_MinSnakeNum + minSnake);
         Util.Message(player, MessageManager.msg.SnakeGame_PlayerPerSnake + playerPerSnake);

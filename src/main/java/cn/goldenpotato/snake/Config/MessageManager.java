@@ -31,6 +31,7 @@ public class MessageManager
 
         msg.Game_CountDown = messageReader.getString("Game_CountDown");
         msg.Game_Loss = messageReader.getString("Game_Loss");
+        msg.Game_Victory = messageReader.getString("Game_Victory");
 
         msg.Command_CommandManager_NoCommandInConsole = messageReader.getString("Command_CommandManager_NoCommandInConsole");
         msg.SubCommand_Create_Usage = messageReader.getString("SubCommand_Create_Usage");
@@ -80,6 +81,8 @@ public class MessageManager
         msg.SnakeGame_InitialSpeed = messageReader.getString("SnakeGame_InitialSpeed");
         msg.SnakeGame_CountDown = messageReader.getString("SnakeGame_CountDown");
         msg.SnakeGame_WaitingTitle = messageReader.getString("SnakeGame_WaitingTitle");
+        msg.SnakeGame_VictoryConditionLength = messageReader.getString("SnakeGame_VictoryConditionLength");
+        msg.SnakeGame_VictoryConditionSnake = messageReader.getString("SnakeGame_VictoryConditionSnake");
         msg.Snake_Status = messageReader.getString("Snake_Status");
         msg.Snake_Status_Dead = messageReader.getString("Snake_Status_Dead");
         msg.Snake_Status_Alive = messageReader.getString("Snake_Status_Alive");
