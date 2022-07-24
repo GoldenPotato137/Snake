@@ -4,8 +4,8 @@ public class Config
 {
     public String language;
     public double foodPercentage;
-    public String lossCommand;
-    public String winCommand;
+    public String globalLossCommand;
+    public String globalWinCommand;
     public boolean playEatSound;
     public boolean playLossSound;
     public boolean playCountDownSound;

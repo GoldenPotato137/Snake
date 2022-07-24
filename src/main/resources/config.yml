@@ -12,7 +12,7 @@ Sound:
   PlayCountDownSound: true
 
 Command:
-  #  WinCommand: give [player] diamond 1
-  WinCommand: [null]
-  #  LossCommand: kill [player]
-  LossCommand: [null]
+  WinCommand: give [player] diamond 1
+  GlobalWinCommand: [null]
+#  LossCommand: kill [player]
+  GlobalLossCommand: [null]

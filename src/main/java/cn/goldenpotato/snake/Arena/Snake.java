@@ -174,6 +174,7 @@ public class Snake
             Victory();
             return;
         }
+        Util.Command(game.lossCommand, players);
         for (UUID player : players)
             Util.Title(Objects.requireNonNull(Bukkit.getPlayer(player)), MessageManager.msg.Game_Loss, 30);
         SnakeStop();
@@ -182,8 +183,9 @@ public class Snake
     public void Victory()
     {
         if (snakeStatus == SnakeStatus.DEAD) return;
+        Util.Command(game.winCommand, players);
         for (UUID player : players)
-            Util.Title(Objects.requireNonNull(Bukkit.getPlayer(player)), MessageManager.msg.Game_Victory, 30);
+            Util.Title(Objects.requireNonNull(Bukkit.getPlayer(player)), MessageManager.msg.Game_Victory, 50);
         SnakeStop();
     }
 

@@ -1,6 +1,7 @@
 package cn.goldenpotato.snake.Arena;
 
 import cn.goldenpotato.snake.Config.ArenaManager;
+import cn.goldenpotato.snake.Config.ConfigManager;
 import cn.goldenpotato.snake.Config.MessageManager;
 import cn.goldenpotato.snake.Util.Coordinate;
 import cn.goldenpotato.snake.Util.Util;
@@ -45,6 +46,7 @@ public class SnakeGame
     public int y; //场地y轴高度
     public GameStatus gameStatus = GameStatus.WAITING; //游戏状态
     public int victoryCondition,victory; //胜利条件(0:曾到达最长长度，1:坚持到最后若干条蛇)及胜利具体值
+    public String winCommand,lossCommand;
     private BossBar bossBar;
 
     void Init()
@@ -59,6 +61,8 @@ public class SnakeGame
             }
         }.runTaskTimer(cn.goldenpotato.snake.Snake.instance, 0, 60);
         bossBar = Bukkit.createBossBar("", BarColor.RED, BarStyle.SOLID);
+        if(winCommand.equals("SameAsGlobal")) winCommand = ConfigManager.config.globalWinCommand;
+        if(lossCommand.equals("SameAsGlobal")) lossCommand = ConfigManager.config.globalLossCommand;
     }
 
     /**
@@ -85,6 +89,9 @@ public class SnakeGame
         else
             victory = in.getInt("victory", 1);
         y = in.getInt("y", 64);
+        //command
+        winCommand = in.getString("winCommand", "SameAsGlobal");
+        lossCommand = in.getString("lossCommand", "SameAsGlobal");
         //beginPos
         in = ArenaManager.arenaReader.getConfigurationSection("ArenaList." + name + ".beginPos");
         if (in != null)

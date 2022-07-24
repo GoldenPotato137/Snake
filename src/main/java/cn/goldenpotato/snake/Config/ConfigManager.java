@@ -26,12 +26,8 @@ public class ConfigManager
         config.language = configuration.getString("Language", "en-WW");
         Util.Log("Using locale: " + config.language);
         //Command
-        config.lossCommand = configuration.getString("Command.LossCommand");
-        if (config.lossCommand != null && config.lossCommand.equals("[null]"))
-            config.lossCommand = null;
-        config.winCommand = configuration.getString("Command.WinCommand");
-        if (config.winCommand != null && config.winCommand.equals("[null]"))
-            config.winCommand = null;
+        config.globalLossCommand = configuration.getString("Command.GlobalLossCommand","[null]");
+        config.globalWinCommand = configuration.getString("Command.GlobalWinCommand","[null]");
         //Sound
         config.playEatSound = configuration.getBoolean("Sound.PlayEatSound", true);
         config.playLossSound = configuration.getBoolean("Sound.PlayLossSound", true);
