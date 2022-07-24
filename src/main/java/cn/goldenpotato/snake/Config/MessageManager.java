@@ -20,6 +20,7 @@ public class MessageManager
         msg.Util_WrongCommand = messageReader.getString("Util_WrongCommand");
         msg.Util_NoPermission = messageReader.getString("Util_NoPermission");
         msg.Util_ArenaNotFound = messageReader.getString("Util_ArenaNotFound");
+        msg.Util_TeamChat = messageReader.getString("Util_TeamChat");
 
         msg.Item_ChangeHeading_Up = messageReader.getString("Item_ChangeHeading_Up");
         msg.Item_ChangeHeading_Down = messageReader.getString("Item_ChangeHeading_Down");
@@ -92,6 +93,7 @@ public class MessageManager
         msg.Snake_Welcome_Control = messageReader.getString("Snake_Welcome_Control");
         msg.Snake_Welcome_Teammate = messageReader.getString("Snake_Welcome_Teammate");
         msg.Snake_Welcome_Help = messageReader.getString("Snake_Welcome_Help");
+        msg.Snake_Welcome_Chat = messageReader.getString("Snake_Welcome_Chat");
         msg.Snake_Status = messageReader.getString("Snake_Status");
         msg.Snake_Status_Dead = messageReader.getString("Snake_Status_Dead");
         msg.Snake_Status_Alive = messageReader.getString("Snake_Status_Alive");

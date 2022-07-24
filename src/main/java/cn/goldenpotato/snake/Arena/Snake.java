@@ -56,10 +56,6 @@ public class Snake
 
     public void Join(UUID player, Inventory inventory)
     {
-        StringBuilder str = new StringBuilder();
-        for (UUID t : players)
-            str.append(Objects.requireNonNull(Bukkit.getPlayer(t)).getName()).append(" ");
-        Util.Message(players, MessageManager.msg.Snake_Welcome_Teammate + str);
         //寄存物品并清空背包
         inventories.put(player, inventory);
         inventoriesBackup.put(player, inventory.getContents());
@@ -118,6 +114,10 @@ public class Snake
         item.SetItem(game.name, playerUp, playerDown, playerLeft, playerRight);
         StandBy(player);
         WelcomeMessage(player, result);
+        StringBuilder str = new StringBuilder();
+        for (UUID t : players)
+            str.append(Objects.requireNonNull(Bukkit.getPlayer(t)).getName()).append(" ");
+        Util.Message(players, MessageManager.msg.Snake_Welcome_Teammate + str);
     }
 
     private void WelcomeMessage(UUID player, List<SnakeGame.Heading> headings)
@@ -130,11 +130,8 @@ public class Snake
             winCondition = MessageManager.msg.SnakeGame_VictoryConditionSnake;
         winCondition = winCondition.replace("<num>", String.valueOf(game.victory));
         Util.Message(p, winCondition);
-        StringBuilder str = new StringBuilder();
-        for (UUID t : players)
-            str.append(Objects.requireNonNull(Bukkit.getPlayer(t)).getName()).append(" ");
-        Util.Message(p, MessageManager.msg.Snake_Welcome_Teammate + str);
         Util.Message(p, MessageManager.msg.Snake_Welcome_Control + headings.toString());
+        Util.Message(p, MessageManager.msg.Snake_Welcome_Chat);
         Util.Message(p, MessageManager.msg.Snake_Welcome_Help);
     }
 
@@ -427,9 +424,9 @@ public class Snake
         {
             Player p = Objects.requireNonNull(Bukkit.getPlayer(player));
             if (p.getHealth() < 20)
-                p.setHealth(p.getHealth() + 1);
+                p.setHealth(Math.min(p.getHealth() + 1, 20));
             if (p.getFoodLevel() < 20)
-                p.setFoodLevel(p.getFoodLevel() + 1);
+                p.setFoodLevel(Math.min(p.getFoodLevel() + 1, 20));
         }
     }
 

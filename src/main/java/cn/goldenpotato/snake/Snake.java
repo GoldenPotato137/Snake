@@ -7,7 +7,7 @@ import cn.goldenpotato.snake.Config.ConfigManager;
 import cn.goldenpotato.snake.Config.MessageManager;
 import cn.goldenpotato.snake.Listener.PlayerListener;
 import cn.goldenpotato.snake.Listener.PotionSplashListener;
-import cn.goldenpotato.snake.Listener.InvCloseListener;
+import cn.goldenpotato.snake.Listener.ChatListener;
 import cn.goldenpotato.snake.Listener.MoveListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -34,7 +34,7 @@ public final class Snake extends JavaPlugin
         CommandManager.Init();
         //注册事件
         Bukkit.getPluginManager().registerEvents(new PotionSplashListener(), this);
-        Bukkit.getPluginManager().registerEvents(new InvCloseListener(), this);
+        Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
         Bukkit.getPluginManager().registerEvents(new MoveListener(),this);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(),this);
 

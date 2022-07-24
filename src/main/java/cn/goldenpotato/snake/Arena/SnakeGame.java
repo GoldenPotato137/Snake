@@ -306,6 +306,20 @@ public class SnakeGame
     }
 
     /**
+     * 获取玩家所在蛇的队员
+     * @param player 玩家
+     * @return 同队玩家
+     */
+    public List<Player> GetTeammate(UUID player)
+    {
+        if(playerToGame.get(player)==null) return null;
+        List<Player> teammates = new ArrayList<>();
+        for (UUID teammate : playerToGame.get(player).players)
+            teammates.add(Bukkit.getPlayer(teammate));
+        return teammates;
+    }
+
+    /**
      * 输出游戏信息
      */
     public void PrintStatus(Player player)

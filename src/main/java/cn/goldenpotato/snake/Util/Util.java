@@ -65,20 +65,18 @@ public class Util
     public static void Command(String command,List<UUID> players)
     {
         if(command.equals("[null]")) return;
-        String com = command;
-        if(com.contains("[player]"))
+        if(command.contains("[player]"))
         {
             for(UUID uuid : players)
             {
                 Player player = Bukkit.getPlayer(uuid);
                 if(player==null) continue;
+                String com = command;
                 com = com.replace("[player]",player.getName());
                 Bukkit.dispatchCommand(console,com);
             }
         }
         else
-        {
-            Bukkit.dispatchCommand(console,com);
-        }
+            Bukkit.dispatchCommand(console,command);
     }
 }

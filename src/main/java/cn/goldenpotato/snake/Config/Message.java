@@ -6,6 +6,7 @@ public class Message
     public String Util_WrongCommand;
     public String Util_NoPermission;
     public String Util_ArenaNotFound;
+    public String Util_TeamChat;
     public String Item_ChangeHeading_Up;
     public String Item_ChangeHeading_Down;
     public String Item_ChangeHeading_Left;
@@ -74,6 +75,7 @@ public class Message
     public String Snake_Welcome_Control;
     public String Snake_Welcome_Teammate;
     public String Snake_Welcome_Help;
+    public String Snake_Welcome_Chat;
     public String Snake_Status;
     public String Snake_Status_Dead;
     public String Snake_Status_Alive;
