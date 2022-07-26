@@ -2,13 +2,13 @@
 A plugin to play snake in Minecraft ! 
 
 ## Introduction
-TODO
+Chinese: [https://www.mcbbs.net/thread-1366665-1-1.html](https://www.mcbbs.net/thread-1366665-1-1.html)
 
 ## Translate
 
-If you'd like to help bring EssentialsX to your language, you can do so by adding new message file.
+If you'd like to help bring SnakeBattle to your language, you can do so by adding new message file.
 
-Locale file is at /src/resources/message_xx-XX
+Locale file is at /src/main/resources/message_xx-XX
 
 ## Building
 This plugin uses Maven for project management
