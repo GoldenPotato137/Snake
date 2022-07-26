@@ -52,6 +52,7 @@ public class Create extends SubCommand
         }
         SnakeGame game = new SnakeGame(args[0],minSnake,maxSnake,playerPerSnake,player.getLocation());
         Snake.arenas.put(args[0],game);
+        Util.Message(player,MessageManager.msg.SubCommand_Create_Success);
     }
 
     @Override
@@ -63,6 +64,8 @@ public class Create extends SubCommand
         else if(args.length==2)
             result.add("1");
         else if(args.length==3)
+            result.add("5");
+        else if(args.length==4)
         {
             result.add("1");
             result.add("2");

@@ -1,1 +1,47 @@
-ArenaList: {}
+#游戏场地存储文件
+#只建议修改数值，不建议手动新增项目
+#新增食物点/蛇生成点，设置大厅位置/离开位置等推荐使用 /snake set 命令
+#以下有一个例子
+
+ArenaList:
+#  qwq: #场地名字
+#    world: world #所在世界
+#    y: 63 #场地y坐标
+#    playerPerSnake: 1 #每条蛇玩家数目
+#    maxSnake: 2 #场地最大蛇数目
+#    minSnake: 1 #场地最小蛇数目
+#    initialSpeed: 10 #初始移动间隔，越小越快，越大越慢
+#    victoryCondition: length #胜利条件，长度胜利：length，生存胜利：snakeNum
+#    victory: 5 #胜利条件值，如果victoryCondition为length，则为长度，如果victoryCondition为snakeNum，则为最后获胜的蛇数目
+#    winCommand: tell [player] qwq #胜利时执行的命令，会覆盖config的全局设置，若与全局相同则输入SameAsGlobal，不需要则[null]
+#    lossCommand: [null] #失败时执行的命令，同上
+#    lobbyPos: #大厅位置
+#      x: 122
+#      y: 63
+#      z: -169
+#    leavePos: #退出游戏之后的位置
+#      x: 133
+#      y: 65
+#      z: -172
+#    beginPos: #蛇的出生点位置，不能少于蛇的数目
+#      '0':
+#        x: 130
+#        z: -164
+#      '1':
+#        x: 131
+#        z: -162
+#    food: #食物
+#      fd1: #食物名字
+#        loc: #食物位置
+#          x: 127
+#          z: -166
+#        lifeTime: 3000 #食物生存时间，每秒10个单位，例子为30s
+#        birthRate: 2 #食物生成概率，越大生成概率越大，不建议高于10
+#        type: NORMAL #食物类型，NORMAL普通，UP/DOWN/LEFT/RIGHT为奖励对应方向药水的食物
+#      fd2: #同上
+#        loc:
+#          x: 131
+#          z: -164
+#        lifeTime: 300
+#        birthRate: 20
+#        type: NORMAL

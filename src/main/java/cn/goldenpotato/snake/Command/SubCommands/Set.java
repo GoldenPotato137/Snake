@@ -31,7 +31,7 @@ public class Set extends SubCommand
     {
         if (args.length < 2)
         {
-            Util.Message(player, MessageManager.msg.SubCommand_Set_Usage);
+            Util.Message(player, usage);
             return;
         }
         SnakeGame arena = Snake.arenas.get(args[0]);
@@ -83,9 +83,11 @@ public class Set extends SubCommand
             case "beginPos":
                 arena.beginPos.add(new Coordinate(player.getLocation().getBlockX(), player.getLocation().getBlockZ()));
                 Util.Message(player, MessageManager.msg.SubCommand_Set_BeginPosSuccess);
+                return;
             case "lobbyPos":
                 arena.lobbyPos = player.getLocation();
                 Util.Message(player, MessageManager.msg.SubCommand_Set_LobbyPosSuccess);
+                return;
             case "leavePos":
                 arena.leavePos = player.getLocation();
                 Util.Message(player, MessageManager.msg.SubCommand_Set_LeavePosSuccess);
@@ -121,7 +123,7 @@ public class Set extends SubCommand
                     else if (args.length == 4)
                         result.add("300");
                     else if (args.length == 5)
-                        result.add("2");
+                        result.add("10");
                     else if (args.length == 6)
                     {
                         result.add("NORMAL");

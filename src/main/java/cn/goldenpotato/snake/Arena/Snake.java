@@ -130,6 +130,9 @@ public class Snake
             winCondition = MessageManager.msg.SnakeGame_VictoryConditionSnake;
         winCondition = winCondition.replace("<num>", String.valueOf(game.victory));
         Util.Message(p, winCondition);
+        String playerStr = MessageManager.msg.Snake_Welcome_Player;
+        playerStr = playerStr.replace("<num>", String.valueOf(game.playerPerSnake));
+        Util.Message(p, playerStr);
         Util.Message(p, MessageManager.msg.Snake_Welcome_Control + headings.toString());
         Util.Message(p, MessageManager.msg.Snake_Welcome_Chat);
         Util.Message(p, MessageManager.msg.Snake_Welcome_Help);
@@ -182,6 +185,9 @@ public class Snake
         //关闭bossBar
         for (UUID player : players)
             bossBars.get(player).removeAll();
+        //移动玩家至lobby
+        for (UUID player : players)
+            Objects.requireNonNull(Bukkit.getPlayer(player)).teleport(game.lobbyPos);
         game.SnakeDie();
     }
 

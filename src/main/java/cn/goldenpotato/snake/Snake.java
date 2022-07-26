@@ -9,6 +9,7 @@ import cn.goldenpotato.snake.Listener.PlayerListener;
 import cn.goldenpotato.snake.Listener.PotionSplashListener;
 import cn.goldenpotato.snake.Listener.ChatListener;
 import cn.goldenpotato.snake.Listener.MoveListener;
+import cn.goldenpotato.snake.Metrics.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -25,6 +26,9 @@ public final class Snake extends JavaPlugin
     @Override
     public void onEnable()
     {
+        int pluginId = 15913;
+        new Metrics(this, pluginId);
+
         instance = this;
         // Plugin startup logic
         ConfigManager.LoadConfig();

@@ -21,6 +21,7 @@ public class Message
     public String SubCommand_Create_Usage;
     public String SubCommand_Create_ArenaExist;
     public String SubCommand_Create_WrongPlayerNum;
+    public String SubCommand_Create_Success;
     public String SubCommand_Game_Usage;
     public String SubCommand_Game_Help_1;
     public String SubCommand_Game_Help_2;
@@ -76,6 +77,7 @@ public class Message
     public String Snake_Welcome_Teammate;
     public String Snake_Welcome_Help;
     public String Snake_Welcome_Chat;
+    public String Snake_Welcome_Player;
     public String Snake_Status;
     public String Snake_Status_Dead;
     public String Snake_Status_Alive;

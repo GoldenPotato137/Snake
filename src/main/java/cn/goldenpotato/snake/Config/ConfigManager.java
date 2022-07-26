@@ -33,7 +33,6 @@ public class ConfigManager
         config.playLossSound = configuration.getBoolean("Sound.PlayLossSound", true);
         config.playCountDownSound = configuration.getBoolean("Sound.PlayCountDownSound", true);
         //Game
-        config.foodPercentage = configuration.getDouble("Game.FoodPercentage", 0.05);
         config.maxMoveTools = configuration.getInt("Game.MaxMoveTools", 30);
         config.toolsPerFood = configuration.getInt("Game.ToolsPerFood", 5);
         config.initialTools = configuration.getInt("Game.InitialTools", 10);

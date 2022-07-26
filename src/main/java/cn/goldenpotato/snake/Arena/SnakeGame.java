@@ -134,6 +134,8 @@ public class SnakeGame
         this.lobbyPos = location;
         this.leavePos = location;
         this.world = location.getWorld();
+        this.winCommand = "SameAsGlobal";
+        this.lossCommand = "SameAsGlobal";
         Init();
     }
 

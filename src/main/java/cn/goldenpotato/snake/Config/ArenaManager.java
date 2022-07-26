@@ -44,6 +44,7 @@ public class ArenaManager
             out.set("victoryCondition","length");
         else
             out.set("victoryCondition","snakeNum");
+        out.set("victory",arena.victory);
         if(!arena.winCommand.equals(ConfigManager.config.globalWinCommand))
             out.set("winCommand",arena.winCommand);
         else
@@ -53,7 +54,6 @@ public class ArenaManager
         else
             out.set("lossCommand","SameAsGlobal");
         out.set("y",arena.y);
-        out.set("victory",arena.victory);
         out.set("lobbyPos.x",arena.lobbyPos.getBlockX());
         out.set("lobbyPos.y",arena.lobbyPos.getBlockY());
         out.set("lobbyPos.z",arena.lobbyPos.getBlockZ());

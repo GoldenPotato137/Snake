@@ -1,18 +1,35 @@
+#语言
+#中文： zh-CN
+#英文： en-WW
 Language: zh-CN
 
+#游戏相关设置
 Game:
-  FoodPercentage: 0.05
+  #每种药水最多同时持有数目，最小为1，最大为64
   MaxMoveTools: 30
+  #吃到奖励药水的食物时发放对应药水的数目，最小为0，最大为64
   ToolsPerFood: 5
+  #开始游戏时初始药水数目，最小为1，最大为64
   InitialTools: 10
 
+#声音相关设置
 Sound:
+  #是否播放吃到食物的声音
   PlayEatSound: true
+  #是否播放撞墙声音
   PlayLossSound: true
+  #是否播放倒计时声音
   PlayCountDownSound: true
 
+#以下命令为全局命令
+#如果有单独给某个场地设置命令，则会覆盖全局命令；如果没有单独设置，则使用全局命令
+#如果不需要命令，则输入[null]
+#执行命令时会将[player]自动替换为玩家名字
+#不要使用give命令等直接给予玩家物品的命令，游戏结束时会回退玩家背包为加入前状态
+#如果需要给予玩家物品，请使用类似于邮箱或给予一次获取礼包机会等命令
+#下有一些示例，可以参考：
 Command:
-  WinCommand: give [player] diamond 1
   GlobalWinCommand: [null]
-#  LossCommand: kill [player]
+#  GlobalWinCommand: artitem send [player] SnakeWinGift
   GlobalLossCommand: [null]
+#  GlobalLossCommand: tell [player] gg lol
