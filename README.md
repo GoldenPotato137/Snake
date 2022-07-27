@@ -6,6 +6,8 @@ wiki: [https://github.com/GoldenPotato137/Snake/wiki](https://github.com/GoldenP
 
 Chinese: [https://www.mcbbs.net/thread-1366665-1-1.html](https://www.mcbbs.net/thread-1366665-1-1.html)
 
+English: [https://www.spigotmc.org/resources/snake-battle.103741/](https://www.spigotmc.org/resources/snake-battle.103741/)
+
 ## Translate
 
 If you'd like to help bring SnakeBattle to your language, you can do so by adding new message file.
