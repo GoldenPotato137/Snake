@@ -2,6 +2,8 @@
 A plugin to play snake in Minecraft ! 
 
 ## Introduction
+wiki: [https://github.com/GoldenPotato137/Snake/wiki](https://github.com/GoldenPotato137/Snake/wiki)
+
 Chinese: [https://www.mcbbs.net/thread-1366665-1-1.html](https://www.mcbbs.net/thread-1366665-1-1.html)
 
 ## Translate
